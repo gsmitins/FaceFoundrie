@@ -374,7 +374,7 @@
         "l5"
       ],
       "custom_css": [
-        "h2{text-transform: uppercase; letter-spacing: 2px; text-align: center; margin-inline: auto; }"
+        "h2 {text-transform: uppercase; letter-spacing: 2px; text-align: center; margin-inline: auto; font-family: var(--nav-font-family); font-size: 1.7em; opacity: 0.8;}"
       ],
       "settings": {
         "title": "As Seen In",
