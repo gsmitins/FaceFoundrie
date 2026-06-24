@@ -375,7 +375,7 @@
       ],
       "custom_css": [
         "h2 {text-transform: uppercase; letter-spacing: 2px; text-align: center; margin-inline: auto; font-family: var(--nav-font-family); font-size: 1.7em; opacity: 0.8;}",
-        ".section-logo-list{margin-inline: auto; margin: 0 auto;}"
+        ".fully-spaced-row--medium {margin-inline: auto; margin: 0 auto;}"
       ],
       "settings": {
         "title": "As Seen In",
