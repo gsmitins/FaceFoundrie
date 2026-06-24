@@ -12,33 +12,36 @@
   {%- endif -%}
 {%- endcapture -%}
 
+{%- capture size_guide_modal_attrs -%}
+  class="modal modal--for-size-guide invisible fixed top-0 left-0 w-full h-full flex items-center justify-center"
+  {%- if section.settings.associate_with_product %}
+    {%- if section.settings.product != blank %} id="size-chart-{{ section.settings.product.id }}"
+    {%- else %} id="size-chart-{{ product.id }}"
+    {%- endif -%}
+  {%- endif %}
+  role="dialog"
+  aria-label="{{ section.settings.heading | escape }}"
+  aria-modal="true"
+  {%- # Prevents trapFocus when in editor -%}
+  {%- unless request.design_mode %} tabindex="-1"{% endunless %}
+{%- endcapture -%}
+
 {%- capture size_guide_modal_start -%}
-  <modal-dialog class="modal modal--for-size-guide invisible fixed top-0 left-0 w-full h-full flex items-center justify-center"
-    {%- if section.settings.associate_with_product %}
-      {%- if section.settings.product != blank %} id="size-chart-{{ section.settings.product.id }}"
-      {%- else %} id="size-chart-{{ product.id }}"
-      {%- endif -%}
-    {%- endif %}
-    role="dialog"
-    aria-label="{{ section.settings.heading | escape }}"
-    aria-modal="true"
-    {%- # Prevents trapFocus when in editor -%}
-    {%- unless request.design_mode %} tabindex="-1"{% endunless %}>
-    <div class="modal__window relative bg-theme-bg text-theme-text text-start overflow-hidden has-motion">
+    {{ '<modal-dialog ' | append: size_guide_modal_attrs | append: '>' }}
+    {{ '<div class="modal__window relative bg-theme-bg text-theme-text text-start overflow-hidden has-motion">' }}
       <button type="button" class="modal__close-btn absolute js-close-modal">
         {% render 'icon-close' %}
         <span class="visually-hidden">{{ 'accessibility.close' | t }}</span>
       </button>
       <h2 class="h3 modal__edge-title">{{ section.settings.heading | escape }}</h2>
-      <div class="modal__content modal__content--no-bottom flex-auto h-full rte">
+      {{ '<div class="modal__content modal__content--no-bottom flex-auto h-full rte">' }}
         <div class="rte">{{ section.settings.under_heading }}</div>
 {%- endcapture -%}
 
 {%- capture size_guide_modal_end -%}
-      </div>
+      {{ '</div>' }}
       {{ size_guide_footer }}
-    </div>
-  </modal-dialog>
+    {{ '</div></modal-dialog>' }}
 {%- endcapture -%}
 
 <size-guide class="size-guide block{% if section.settings.enable_row_highlight %} size-guide--row-highlight{% endif %}" data-section-id="{{ section.id }}" data-dynamic-product-content="{{ section.id }}">

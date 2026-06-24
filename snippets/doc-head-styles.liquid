@@ -19,8 +19,8 @@
   --larger-section-padding:        80px;
   --larger-section-padding-mobile: 60px;
   --largest-section-padding:       110px;
-  --ff-content-max:                100%;
-  --ff-gutter:                     1.25rem;
+  --ff-content-max:                var(--page-container-width);
+  --ff-gutter:                     var(--container-pad-x);
   --ff-section-y:                  clamp(64px, 7vw, 112px);
   --ff-section-y-tight:            clamp(48px, 5vw, 80px);
   --ff-grid-gap:                   clamp(8px, 0.9vw, 16px);
@@ -326,18 +326,10 @@
   {%- endif -%}
 }
 
-@media (min-width: 700px) {
-  :root {
-    --ff-gutter: 2rem;
-  }
-}
-
-@media (min-width: 1399px) {
-  :root {
-    --ff-gutter: 3rem;
-  }
-}
-
+.template-index .section-slideshow slide-show,
+.template-index .section-ff-membership > .fully-spaced-row--medium,
+.template-index .section-ff-rini > .fully-spaced-row--medium,
+.template-index .section-gallery > [id^="section-id-"] > .fully-spaced-row--medium,
 .template-index .section-ff-services .ffsvc__inner,
 .template-index .section-ff-shop .ffs__inner,
 .template-index .section-ff-locations .ffl,
@@ -345,8 +337,11 @@
 .template-index .section-logo-list .container,
 .template-index .section-gallery .container {
   box-sizing: border-box;
+  display: block;
   width: 100%;
-  max-width: none !important;
+  max-width: var(--ff-content-max) !important;
+  margin-right: auto;
+  margin-left: auto;
   padding-right: var(--ff-gutter);
   padding-left: var(--ff-gutter);
 }
