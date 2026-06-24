@@ -19,8 +19,8 @@
   --larger-section-padding:        80px;
   --larger-section-padding-mobile: 60px;
   --largest-section-padding:       110px;
-  --ff-content-max:                var(--page-container-width);
-  --ff-gutter:                     var(--container-pad-x);
+  --ff-content-max:                1940px;
+  --ff-gutter:                     clamp(30px, 3.125vw, 60px);
   --ff-section-y:                  clamp(64px, 7vw, 112px);
   --ff-section-y-tight:            clamp(48px, 5vw, 80px);
   --ff-grid-gap:                   clamp(8px, 0.9vw, 16px);
@@ -327,9 +327,26 @@
 }
 
 .template-index .section-slideshow slide-show,
-.template-index .section-ff-membership > .fully-spaced-row--medium,
-.template-index .section-ff-rini > .fully-spaced-row--medium,
-.template-index .section-gallery > [id^="section-id-"] > .fully-spaced-row--medium,
+.template-index .section-rich-text > .fully-spaced-row--small,
+.template-index .section-rich-text > .fully-spaced-row--medium,
+.template-index .section-rich-text > .fully-spaced-row--large,
+.template-index .section-rich-text > .fully-padded-row--small,
+.template-index .section-rich-text > .fully-padded-row--medium,
+.template-index .section-rich-text > .fully-padded-row--large,
+.template-index .section-ff-services .ffsvc,
+.template-index .section-ff-shop .ffs,
+.template-index .section-ff-membership .ffm,
+.template-index .section-ff-rini .ffr,
+.template-index .section-logo-list > [id^="section-id-"],
+.template-index .section-gallery > [id^="section-id-"] > .fully-spaced-row--medium {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  max-width: var(--ff-content-max) !important;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 .template-index .section-ff-services .ffsvc__inner,
 .template-index .section-ff-shop .ffs__inner,
 .template-index .section-ff-locations .ffl,
@@ -337,7 +354,6 @@
 .template-index .section-logo-list .container,
 .template-index .section-gallery .container {
   box-sizing: border-box;
-  display: block;
   width: 100%;
   max-width: var(--ff-content-max) !important;
   margin-right: auto;
