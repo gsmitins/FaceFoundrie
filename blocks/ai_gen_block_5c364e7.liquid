@@ -1,0 +1,669 @@
+{% doc %}
+  @prompt
+    Create a premium services section for a facial spa called FaceFoundrie using category cards. Display 4 category cards with warm beige backgrounds and editorial typography: "Next-Level Facials", "Enhancements", "Mini Facials", and "All Things Face". Each card should be expandable (accordion or click-to-expand) to reveal the individual services listed below it. Use warm beige and cream tones, clean serif or editorial typography, and a premium spa aesthetic. Include the following services per card:
+    
+    - Next-Level Facials (40–50 minute results-driven facials): Microchanneling Powered by Procell, Royal Treatment, Hydrafacial, Firm AF, Clean + Natural, The Sculpt, Cryo Queen, Foundré Glow, Acne Agent (Powered by Face Reality)
+    - Enhancements (add-ons to customize your facial): Dermaplaning, Chemical Peel, Skin Renewal Mask by BIOEFFECT, Enzyme Mask, Hungarian Massage, Facial Cupping, Scalp Massage, LED Light, Gua Sha, Hydrating Lip Mask, Skin Renewal Eye Mask by BIOEFFECT
+    - Mini Facials (20-minute quick treatments): Mini Derma, Mini Mask
+    - All Things Face (lashes, brows + waxing): Brow Wax + Shape, Brow Wax + Tint, Brow Henna, Brow Lamination, Lash Lift + Tint
+    
+    Each card should show the category name and subtitle by default, with a smooth expand/collapse animation to reveal the service list. Section should be fully responsive and mobile-friendly.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ff-services-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    padding: {{ block.settings.section_padding }}px 20px;
+    background-color: {{ block.settings.section_background }};
+  }
+
+  .ff-services__container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  .ff-services__header-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: {{ block.settings.header_spacing }}px;
+  }
+
+  .ff-services__title-{{ ai_gen_id }} {
+    font-family: {{ block.settings.heading_font.family }}, {{ block.settings.heading_font.fallback_families }};
+    font-weight: {{ block.settings.heading_font.weight }};
+    font-size: {{ block.settings.title_size }}px;
+    color: {{ block.settings.title_color }};
+    margin: 0 0 16px 0;
+    letter-spacing: {{ block.settings.title_letter_spacing }}px;
+  }
+
+  .ff-services__subtitle-{{ ai_gen_id }} {
+    font-size: {{ block.settings.subtitle_size }}px;
+    color: {{ block.settings.subtitle_color }};
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .ff-services__grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat({{ block.settings.columns_desktop }}, 1fr);
+    gap: {{ block.settings.card_gap }}px;
+    margin-top: {{ block.settings.grid_spacing }}px;
+  }
+
+  .ff-services__card-{{ ai_gen_id }} {
+    background-color: {{ block.settings.card_background }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .ff-services__card-{{ ai_gen_id }}:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  .ff-services__card-header-{{ ai_gen_id }} {
+    padding: {{ block.settings.card_padding }}px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .ff-services__card-title-wrapper-{{ ai_gen_id }} {
+    flex: 1;
+  }
+
+  .ff-services__card-title-{{ ai_gen_id }} {
+    font-family: {{ block.settings.card_title_font.family }}, {{ block.settings.card_title_font.fallback_families }};
+    font-weight: {{ block.settings.card_title_font.weight }};
+    font-size: {{ block.settings.card_title_size }}px;
+    color: {{ block.settings.card_title_color }};
+    margin: 0 0 8px 0;
+    letter-spacing: 0.5px;
+  }
+
+  .ff-services__card-description-{{ ai_gen_id }} {
+    font-size: {{ block.settings.card_description_size }}px;
+    color: {{ block.settings.card_description_color }};
+    margin: 0;
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  .ff-services__card-icon-{{ ai_gen_id }} {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+    color: {{ block.settings.icon_color }};
+  }
+
+  .ff-services__card-{{ ai_gen_id }}.is-expanded .ff-services__card-icon-{{ ai_gen_id }} {
+    transform: rotate(180deg);
+  }
+
+  .ff-services__card-content-{{ ai_gen_id }} {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+  }
+
+  .ff-services__card-{{ ai_gen_id }}.is-expanded .ff-services__card-content-{{ ai_gen_id }} {
+    max-height: 2000px;
+    padding: 0 {{ block.settings.card_padding }}px {{ block.settings.card_padding }}px;
+  }
+
+  .ff-services__service-list-{{ ai_gen_id }} {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .ff-services__service-item-{{ ai_gen_id }} {
+    padding: {{ block.settings.service_item_spacing }}px 0;
+    border-bottom: 1px solid {{ block.settings.divider_color }};
+    font-size: {{ block.settings.service_text_size }}px;
+    color: {{ block.settings.service_text_color }};
+    line-height: 1.6;
+  }
+
+  .ff-services__service-item-{{ ai_gen_id }}:last-child {
+    border-bottom: none;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ff-services__grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_tablet }}, 1fr);
+    }
+
+    .ff-services__title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.title_size }}px * 0.8);
+    }
+
+    .ff-services__card-title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.card_title_size }}px * 0.9);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ff-services__grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_mobile }}, 1fr);
+    }
+
+    .ff-services__title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.title_size }}px * 0.7);
+    }
+
+    .ff-services__card-title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.card_title_size }}px * 0.85);
+    }
+
+    .ff-services__card-padding-{{ ai_gen_id }} {
+      padding: calc({{ block.settings.card_padding }}px * 0.75);
+    }
+  }
+{% endstyle %}
+
+<ff-services-{{ ai_gen_id }} class="ff-services-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ff-services__container-{{ ai_gen_id }}">
+    {% if block.settings.section_title != blank or block.settings.section_subtitle != blank %}
+      <div class="ff-services__header-{{ ai_gen_id }}">
+        {% if block.settings.section_title != blank %}
+          <h2 class="ff-services__title-{{ ai_gen_id }}">{{ block.settings.section_title }}</h2>
+        {% endif %}
+        {% if block.settings.section_subtitle != blank %}
+          <p class="ff-services__subtitle-{{ ai_gen_id }}">{{ block.settings.section_subtitle }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="ff-services__grid-{{ ai_gen_id }}">
+      <div class="ff-services__card-{{ ai_gen_id }}" data-card="1">
+        <div class="ff-services__card-header-{{ ai_gen_id }}">
+          <div class="ff-services__card-title-wrapper-{{ ai_gen_id }}">
+            <h3 class="ff-services__card-title-{{ ai_gen_id }}">{{ block.settings.card_1_title }}</h3>
+            <p class="ff-services__card-description-{{ ai_gen_id }}">{{ block.settings.card_1_description }}</p>
+          </div>
+          <svg class="ff-services__card-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+        <div class="ff-services__card-content-{{ ai_gen_id }}">
+          <ul class="ff-services__service-list-{{ ai_gen_id }}">
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Microchanneling Powered by Procell</li>
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Royal Treatment</li>
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Hydrafacial</li>
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Firm AF</li>
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Clean + Natural</li>
+            <li class="ff-services__service-item-{{ ai_gen_id }}">The Sculpt</li>
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Cryo Queen</li>
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Foundré Glow</li>
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Acne Agent (Powered by Face Reality)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ff-services__card-{{ ai_gen_id }}" data-card="2">
+        <div class="ff-services__card-header-{{ ai_gen_id }}">
+          <div class="ff-services__card-title-wrapper-{{ ai_gen_id }}">
+            <h3 class="ff-services__card-title-{{ ai_gen_id }}">{{ block.settings.card_2_title }}</h3>
+            <p class="ff-services__card-description-{{ ai_gen_id }}">{{ block.settings.card_2_description }}</p>
+          </div>
+          <svg class="ff-services__card-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+        <div class="ff-services__card-content-{{ ai_gen_id }}">
+          <ul class="ff-services__service-list-{{ ai_gen_id }}">
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Dermaplaning</li>
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Chemical Peel</li>
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Skin Renewal Mask by BIOEFFECT</li>
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Enzyme Mask</li>
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Hungarian Massage</li>
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Facial Cupping</li>
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Scalp Massage</li>
+            <li class="ff-services__service-item-{{ ai_gen_id }}">LED Light</li>
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Gua Sha</li>
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Hydrating Lip Mask</li>
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Skin Renewal Eye Mask by BIOEFFECT</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ff-services__card-{{ ai_gen_id }}" data-card="3">
+        <div class="ff-services__card-header-{{ ai_gen_id }}">
+          <div class="ff-services__card-title-wrapper-{{ ai_gen_id }}">
+            <h3 class="ff-services__card-title-{{ ai_gen_id }}">{{ block.settings.card_3_title }}</h3>
+            <p class="ff-services__card-description-{{ ai_gen_id }}">{{ block.settings.card_3_description }}</p>
+          </div>
+          <svg class="ff-services__card-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+        <div class="ff-services__card-content-{{ ai_gen_id }}">
+          <ul class="ff-services__service-list-{{ ai_gen_id }}">
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Mini Derma</li>
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Mini Mask</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ff-services__card-{{ ai_gen_id }}" data-card="4">
+        <div class="ff-services__card-header-{{ ai_gen_id }}">
+          <div class="ff-services__card-title-wrapper-{{ ai_gen_id }}">
+            <h3 class="ff-services__card-title-{{ ai_gen_id }}">{{ block.settings.card_4_title }}</h3>
+            <p class="ff-services__card-description-{{ ai_gen_id }}">{{ block.settings.card_4_description }}</p>
+          </div>
+          <svg class="ff-services__card-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+        <div class="ff-services__card-content-{{ ai_gen_id }}">
+          <ul class="ff-services__service-list-{{ ai_gen_id }}">
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Brow Wax + Shape</li>
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Brow Wax + Tint</li>
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Brow Henna</li>
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Brow Lamination</li>
+            <li class="ff-services__service-item-{{ ai_gen_id }}">Lash Lift + Tint</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</ff-services-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class FFServices{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.cards = this.querySelectorAll('.ff-services__card-{{ ai_gen_id }}');
+        this.setupEventListeners();
+      }
+
+      setupEventListeners() {
+        this.cards.forEach((card) => {
+          const header = card.querySelector('.ff-services__card-header-{{ ai_gen_id }}');
+          
+          header.addEventListener('click', () => {
+            const isExpanded = card.classList.contains('is-expanded');
+            
+            card.classList.toggle('is-expanded');
+            header.setAttribute('aria-expanded', !isExpanded);
+          });
+
+          header.setAttribute('role', 'button');
+          header.setAttribute('aria-expanded', 'false');
+          header.setAttribute('tabindex', '0');
+
+          header.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              header.click();
+            }
+          });
+        });
+      }
+    }
+
+    customElements.define('ff-services-{{ ai_gen_id }}', FFServices{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "FaceFoundrie services",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section header"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Title",
+      "default": "Our Services"
+    },
+    {
+      "type": "textarea",
+      "id": "section_subtitle",
+      "label": "Subtitle",
+      "default": "Discover our curated collection of premium facial treatments and enhancements"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "title_letter_spacing",
+      "label": "Title letter spacing",
+      "min": 0,
+      "max": 5,
+      "step": 0.5,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Subtitle size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font",
+      "default": "serif"
+    },
+    {
+      "type": "header",
+      "content": "Card 1 - Next-Level Facials"
+    },
+    {
+      "type": "text",
+      "id": "card_1_title",
+      "label": "Title",
+      "default": "Next-Level Facials"
+    },
+    {
+      "type": "text",
+      "id": "card_1_description",
+      "label": "Description",
+      "default": "40–50 minute results-driven facials"
+    },
+    {
+      "type": "header",
+      "content": "Card 2 - Enhancements"
+    },
+    {
+      "type": "text",
+      "id": "card_2_title",
+      "label": "Title",
+      "default": "Enhancements"
+    },
+    {
+      "type": "text",
+      "id": "card_2_description",
+      "label": "Description",
+      "default": "Add-ons to customize your facial"
+    },
+    {
+      "type": "header",
+      "content": "Card 3 - Mini Facials"
+    },
+    {
+      "type": "text",
+      "id": "card_3_title",
+      "label": "Title",
+      "default": "Mini Facials"
+    },
+    {
+      "type": "text",
+      "id": "card_3_description",
+      "label": "Description",
+      "default": "20-minute quick treatments"
+    },
+    {
+      "type": "header",
+      "content": "Card 4 - All Things Face"
+    },
+    {
+      "type": "text",
+      "id": "card_4_title",
+      "label": "Title",
+      "default": "All Things Face"
+    },
+    {
+      "type": "text",
+      "id": "card_4_description",
+      "label": "Description",
+      "default": "Lashes, brows + waxing"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maximum content width",
+      "min": 800,
+      "max": 1600,
+      "step": 50,
+      "unit": "px",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Section padding",
+      "min": 20,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "header_spacing",
+      "label": "Header spacing",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "grid_spacing",
+      "label": "Grid spacing",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns on desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "select",
+      "id": "columns_tablet",
+      "label": "Columns on tablet",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "font_picker",
+      "id": "card_title_font",
+      "label": "Card title font",
+      "default": "serif"
+    },
+    {
+      "type": "range",
+      "id": "card_title_size",
+      "label": "Card title size",
+      "min": 18,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "card_description_size",
+      "label": "Card description size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "service_text_size",
+      "label": "Service text size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "card_padding",
+      "label": "Card padding",
+      "min": 16,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Gap between cards",
+      "min": 16,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Card border radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "service_item_spacing",
+      "label": "Service item spacing",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_background",
+      "label": "Section background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title",
+      "default": "#2C2C2C"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle",
+      "default": "#6B6B6B"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#F5F1ED"
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Card title",
+      "default": "#2C2C2C"
+    },
+    {
+      "type": "color",
+      "id": "card_description_color",
+      "label": "Card description",
+      "default": "#8B7E74"
+    },
+    {
+      "type": "color",
+      "id": "service_text_color",
+      "label": "Service text",
+      "default": "#4A4A4A"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider",
+      "default": "#E8E0D8"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon",
+      "default": "#8B7E74"
+    }
+  ],
+  "presets": [
+    {
+      "name": "FaceFoundrie services"
+    }
+  ]
+}
+{% endschema %}

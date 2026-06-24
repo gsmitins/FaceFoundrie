@@ -1,0 +1,345 @@
+{%- liquid
+  assign cards = section.blocks | where: 'type', 'service_card'
+-%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    --ffsvc-bg: {{ section.settings.bg_color }};
+    --ffsvc-ink: {{ section.settings.ink_color }};
+    --ffsvc-quiz-bg: {{ section.settings.quiz_bg }};
+    --ffsvc-cream: #F5EFE6;
+    --ffsvc-muted: #9B8E84;
+  }
+  #shopify-section-{{ section.id }} .ffsvc {
+    background: var(--ffsvc-bg);
+    padding: var(--ff-section-y) 0;
+  }
+  #shopify-section-{{ section.id }} .ffsvc__inner {
+    max-width: var(--ff-content-max);
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding-inline: var(--ff-gutter);
+  }
+  #shopify-section-{{ section.id }} .ffsvc__head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: clamp(20px, 4vw, 56px);
+    margin-bottom: clamp(28px, 4vw, 56px);
+  }
+  #shopify-section-{{ section.id }} .ffsvc__eyebrow {
+    font-family: var(--nav-font-family);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--ffsvc-muted);
+    margin: 0 0 14px;
+  }
+  #shopify-section-{{ section.id }} .ffsvc__heading {
+    font-family: var(--heading-font-family);
+    font-weight: 400;
+    font-size: 42px;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--ffsvc-ink);
+    margin: 0;
+  }
+  #shopify-section-{{ section.id }} .ffsvc__viewall {
+    font-family: var(--nav-font-family);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ffsvc-ink);
+    border-bottom: 1px solid var(--ffsvc-ink);
+    padding-bottom: 2px;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+  #shopify-section-{{ section.id }} .ffsvc__row--1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--ff-grid-gap);
+    margin-bottom: var(--ff-grid-gap);
+  }
+  #shopify-section-{{ section.id }} .ffsvc__row--2 {
+    display: grid;
+    grid-template-columns: 1fr 0.62fr 1fr;
+    gap: var(--ff-grid-gap);
+  }
+  #shopify-section-{{ section.id }} .ffsvc-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 360px;
+    display: block;
+  }
+  #shopify-section-{{ section.id }} .ffsvc__row--2 .ffsvc-card { min-height: 320px; }
+  #shopify-section-{{ section.id }} .ffsvc-card img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  #shopify-section-{{ section.id }} .ffsvc-card:hover img { transform: scale(1.04); }
+  #shopify-section-{{ section.id }} .ffsvc-card__veil {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(18,14,10,0.82) 0%, rgba(18,14,10,0.08) 55%, transparent 100%);
+  }
+  #shopify-section-{{ section.id }} .ffsvc-card__body {
+    position: absolute;
+    left: clamp(22px, 2.4vw, 40px);
+    right: clamp(22px, 2.4vw, 40px);
+    bottom: clamp(22px, 2.4vw, 38px);
+  }
+  #shopify-section-{{ section.id }} .ffsvc__row--2 .ffsvc-card__body { left: 30px; right: 30px; bottom: 28px; }
+  #shopify-section-{{ section.id }} .ffsvc-card__eyebrow {
+    font-family: var(--nav-font-family);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin: 0 0 8px;
+  }
+  #shopify-section-{{ section.id }} .ffsvc-card__title {
+    font-family: var(--heading-font-family);
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 1.1;
+    color: var(--ffsvc-cream);
+    margin: 0 0 10px;
+  }
+  #shopify-section-{{ section.id }} .ffsvc__row--2 .ffsvc-card__title { font-size: 28px; margin-bottom: 16px; }
+  #shopify-section-{{ section.id }} .ffsvc-card__detail {
+    font-family: var(--nav-font-family);
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: rgba(245,239,230,0.72);
+    margin: 0 0 20px;
+  }
+  #shopify-section-{{ section.id }} .ffsvc-card__btn,
+  #shopify-section-{{ section.id }} .ffsvc-quiz__btn {
+    display: inline-block;
+    font-family: var(--nav-font-family);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  #shopify-section-{{ section.id }} .ffsvc-card__btn {
+    color: var(--ffsvc-cream);
+    background: rgba(18,14,10,0.72);
+    border: 1px solid rgba(245,239,230,0.45);
+    padding: 10px 24px;
+    transition: background 0.2s ease;
+  }
+  #shopify-section-{{ section.id }} .ffsvc-card__btn:hover { background: rgba(18,14,10,0.95); }
+  #shopify-section-{{ section.id }} .ffsvc-quiz {
+    background: var(--ffsvc-quiz-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: clamp(32px, 4vw, 56px) clamp(24px, 3vw, 44px);
+    min-height: 320px;
+  }
+  #shopify-section-{{ section.id }} .ffsvc-quiz__eyebrow {
+    font-family: var(--nav-font-family);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ffsvc-muted);
+    margin: 0 0 14px;
+  }
+  #shopify-section-{{ section.id }} .ffsvc-quiz__title {
+    font-family: var(--heading-font-family);
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.2;
+    color: var(--ffsvc-ink);
+    margin: 0 0 10px;
+  }
+  #shopify-section-{{ section.id }} .ffsvc-quiz__text {
+    font-family: var(--nav-font-family);
+    font-size: 11px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #6E6460;
+    margin: 0 0 24px;
+  }
+  #shopify-section-{{ section.id }} .ffsvc-quiz__btn {
+    color: var(--ffsvc-cream);
+    background: var(--ffsvc-ink);
+    padding: 11px 24px;
+  }
+  #shopify-section-{{ section.id }} .ffsvc-card__placeholder { position:absolute; inset:0; width:100%; height:100%; }
+
+  @media (max-width: 860px) {
+    #shopify-section-{{ section.id }} .ffsvc__row--1,
+    #shopify-section-{{ section.id }} .ffsvc__row--2 { grid-template-columns: 1fr; }
+    #shopify-section-{{ section.id }} .ffsvc__head { flex-direction: column; align-items: flex-start; }
+    #shopify-section-{{ section.id }} .ffsvc-card,
+    #shopify-section-{{ section.id }} .ffsvc__row--2 .ffsvc-card,
+    #shopify-section-{{ section.id }} .ffsvc-quiz { min-height: 340px; }
+  }
+  @media (min-width: 900px) {
+    #shopify-section-{{ section.id }} .ffsvc__heading { font-size: 50px; }
+    #shopify-section-{{ section.id }} .ffsvc-card { min-height: 420px; }
+    #shopify-section-{{ section.id }} .ffsvc__row--2 .ffsvc-card,
+    #shopify-section-{{ section.id }} .ffsvc-quiz { min-height: 340px; }
+    #shopify-section-{{ section.id }} .ffsvc-card__title { font-size: 34px; }
+    #shopify-section-{{ section.id }} .ffsvc__row--2 .ffsvc-card__title { font-size: 30px; }
+    #shopify-section-{{ section.id }} .ffsvc-quiz__title { font-size: 28px; }
+  }
+  @media (min-width: 1440px) {
+    #shopify-section-{{ section.id }} .ffsvc__heading { font-size: 58px; }
+    #shopify-section-{{ section.id }} .ffsvc-card { min-height: 500px; }
+    #shopify-section-{{ section.id }} .ffsvc__row--2 .ffsvc-card,
+    #shopify-section-{{ section.id }} .ffsvc-quiz { min-height: 410px; }
+    #shopify-section-{{ section.id }} .ffsvc-card__title { font-size: 38px; }
+    #shopify-section-{{ section.id }} .ffsvc__row--2 .ffsvc-card__title { font-size: 32px; }
+    #shopify-section-{{ section.id }} .ffsvc-quiz__title { font-size: 30px; }
+  }
+{% endstyle %}
+
+<div class="ffsvc">
+  <div class="ffsvc__inner">
+
+    <div class="ffsvc__head">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}<p class="ffsvc__eyebrow">{{ section.settings.eyebrow | escape }}</p>{%- endif -%}
+        {%- if section.settings.heading != blank -%}<h2 class="ffsvc__heading">{{ section.settings.heading | escape }}</h2>{%- endif -%}
+      </div>
+      {%- if section.settings.view_all_label != blank -%}
+        <a class="ffsvc__viewall" href="{{ section.settings.view_all_link | default: '#' }}">{{ section.settings.view_all_label | escape }}</a>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Row 1: first two cards {%- endcomment -%}
+    <div class="ffsvc__row ffsvc__row--1">
+      {%- for block in cards limit: 2 -%}
+        <a class="ffsvc-card" href="{{ block.settings.button_link | default: '#' }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <img src="{{ block.settings.image | image_url: width: 1400 }}" alt="{{ block.settings.title | escape }}" loading="lazy" width="700" height="500">
+          {%- else -%}
+            <div class="ffsvc-card__placeholder">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+          {%- endif -%}
+          <div class="ffsvc-card__veil"></div>
+          <div class="ffsvc-card__body">
+            {%- if block.settings.eyebrow != blank -%}<p class="ffsvc-card__eyebrow">{{ block.settings.eyebrow | escape }}</p>{%- endif -%}
+            <h3 class="ffsvc-card__title">{{ block.settings.title | escape }}</h3>
+            {%- if block.settings.detail != blank -%}<p class="ffsvc-card__detail">{{ block.settings.detail | escape }}</p>{%- endif -%}
+            {%- if block.settings.button_label != blank -%}<span class="ffsvc-card__btn">{{ block.settings.button_label | escape }}</span>{%- endif -%}
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+
+    {%- comment -%} Row 2: card, quiz, card {%- endcomment -%}
+    <div class="ffsvc__row ffsvc__row--2">
+      {%- for block in cards offset: 2 limit: 1 -%}
+        <a class="ffsvc-card" href="{{ block.settings.button_link | default: '#' }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <img src="{{ block.settings.image | image_url: width: 1000 }}" alt="{{ block.settings.title | escape }}" loading="lazy" width="500" height="420">
+          {%- else -%}
+            <div class="ffsvc-card__placeholder">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+          {%- endif -%}
+          <div class="ffsvc-card__veil"></div>
+          <div class="ffsvc-card__body">
+            {%- if block.settings.eyebrow != blank -%}<p class="ffsvc-card__eyebrow">{{ block.settings.eyebrow | escape }}</p>{%- endif -%}
+            <h3 class="ffsvc-card__title">{{ block.settings.title | escape }}</h3>
+            {%- if block.settings.detail != blank -%}<p class="ffsvc-card__detail">{{ block.settings.detail | escape }}</p>{%- endif -%}
+            {%- if block.settings.button_label != blank -%}<span class="ffsvc-card__btn">{{ block.settings.button_label | escape }}</span>{%- endif -%}
+          </div>
+        </a>
+      {%- endfor -%}
+
+      <div class="ffsvc-quiz">
+        {%- if section.settings.quiz_eyebrow != blank -%}<p class="ffsvc-quiz__eyebrow">{{ section.settings.quiz_eyebrow | escape }}</p>{%- endif -%}
+        {%- if section.settings.quiz_title != blank -%}<h3 class="ffsvc-quiz__title">{{ section.settings.quiz_title | escape }}</h3>{%- endif -%}
+        {%- if section.settings.quiz_text != blank -%}<p class="ffsvc-quiz__text">{{ section.settings.quiz_text | escape }}</p>{%- endif -%}
+        {%- if section.settings.quiz_button_label != blank -%}<a class="ffsvc-quiz__btn" href="{{ section.settings.quiz_button_link | default: '#' }}">{{ section.settings.quiz_button_label | escape }}</a>{%- endif -%}
+      </div>
+
+      {%- for block in cards offset: 3 limit: 1 -%}
+        <a class="ffsvc-card" href="{{ block.settings.button_link | default: '#' }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <img src="{{ block.settings.image | image_url: width: 1000 }}" alt="{{ block.settings.title | escape }}" loading="lazy" width="500" height="420">
+          {%- else -%}
+            <div class="ffsvc-card__placeholder">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+          {%- endif -%}
+          <div class="ffsvc-card__veil"></div>
+          <div class="ffsvc-card__body">
+            {%- if block.settings.eyebrow != blank -%}<p class="ffsvc-card__eyebrow">{{ block.settings.eyebrow | escape }}</p>{%- endif -%}
+            <h3 class="ffsvc-card__title">{{ block.settings.title | escape }}</h3>
+            {%- if block.settings.detail != blank -%}<p class="ffsvc-card__detail">{{ block.settings.detail | escape }}</p>{%- endif -%}
+            {%- if block.settings.button_label != blank -%}<span class="ffsvc-card__btn">{{ block.settings.button_label | escape }}</span>{%- endif -%}
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "FF Services",
+  "class": "section-ff-services",
+  "disabled_on": { "groups": ["aside"] },
+  "settings": [
+    { "type": "header", "content": "Header" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Experts in All Things Face" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Every service, done right." },
+    { "type": "text", "id": "view_all_label", "label": "View-all label", "default": "View All Services →" },
+    { "type": "url", "id": "view_all_link", "label": "View-all link" },
+    { "type": "header", "content": "Quiz card" },
+    { "type": "text", "id": "quiz_eyebrow", "label": "Eyebrow", "default": "Not sure?" },
+    { "type": "text", "id": "quiz_title", "label": "Title", "default": "Find your perfect treatment" },
+    { "type": "text", "id": "quiz_text", "label": "Text", "default": "Take our 2-minute skin quiz and we'll match you." },
+    { "type": "text", "id": "quiz_button_label", "label": "Button label", "default": "Skin Quiz" },
+    { "type": "url", "id": "quiz_button_link", "label": "Button link" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#F5F0EA" },
+    { "type": "color", "id": "ink_color", "label": "Ink / text", "default": "#1E1B17" },
+    { "type": "color", "id": "quiz_bg", "label": "Quiz card background", "default": "#EAE3D8" }
+  ],
+  "blocks": [
+    {
+      "type": "service_card",
+      "name": "Service card",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Signature Service" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Focused Facials" },
+        { "type": "text", "id": "detail", "label": "Detail (optional)" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Book Now" },
+        { "type": "url", "id": "button_link", "label": "Button link" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "FF Services",
+      "category": "Face Foundrié",
+      "blocks": [
+        { "type": "service_card", "settings": { "eyebrow": "Signature Service", "title": "Focused Facials", "detail": "50 or 80 min · Customized to your skin" } },
+        { "type": "service_card", "settings": { "eyebrow": "Targeted Treatment", "title": "The Acne Agent", "detail": "Enzyme + extractions + peel · 50 min" } },
+        { "type": "service_card", "settings": { "eyebrow": "Brows & Lashes", "title": "Brow Lovin'" } },
+        { "type": "service_card", "settings": { "eyebrow": "Add-Ons", "title": "Enhancements" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

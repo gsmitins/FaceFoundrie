@@ -1,0 +1,124 @@
+{%- liquid
+  assign locs = section.blocks | where: 'type', 'location'
+-%}
+{% style %}
+  #shopify-section-{{ section.id }} .ffl {
+    max-width: var(--ff-content-max);
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding-inline: var(--ff-gutter);
+  }
+  #shopify-section-{{ section.id }} .ffl__head {
+    display: flex; align-items: flex-end; justify-content: space-between; gap: clamp(20px, 4vw, 56px); margin-bottom: clamp(28px, 4vw, 56px);
+  }
+  #shopify-section-{{ section.id }} .ffl__eyebrow {
+    font-family: var(--nav-font-family);
+    font-size: 10px; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase;
+    color: rgb(var(--text-color)); margin: 0 0 12px;
+  }
+  #shopify-section-{{ section.id }} .ffl__heading {
+    font-family: var(--heading-font-family); font-weight: 400;
+    font-size: 42px; line-height: 1.05; margin: 0; color: rgb(var(--heading-color));
+  }
+  #shopify-section-{{ section.id }} .ffl__heading p { margin: 0; }
+  #shopify-section-{{ section.id }} .ffl__heading em { font-style: italic; }
+  #shopify-section-{{ section.id }} .ffl__viewall {
+    font-family: var(--nav-font-family);
+    font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+    color: rgb(var(--text-color)); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 3px; white-space: nowrap;
+  }
+  #shopify-section-{{ section.id }} .ffl__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--ff-grid-gap); }
+  #shopify-section-{{ section.id }} .ffl-card {
+    position: relative; overflow: hidden; display: block; text-decoration: none; background: #121212;
+  }
+  #shopify-section-{{ section.id }} .ffl-card__img { width: 100%; aspect-ratio: 4/3; object-fit: cover; opacity: 0.78; display: block; transition: opacity 0.3s, transform 0.5s; }
+  #shopify-section-{{ section.id }} .ffl-card__img.placeholder-svg { background:#2a2a2a; }
+  #shopify-section-{{ section.id }} .ffl-card:hover .ffl-card__img { opacity: 0.62; transform: scale(1.03); }
+  #shopify-section-{{ section.id }} .ffl-card__overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.74) 0%, transparent 56%); }
+  #shopify-section-{{ section.id }} .ffl-card__body { position: absolute; bottom: 0; left: 0; padding: clamp(22px, 2.2vw, 36px); color: #fff; }
+  #shopify-section-{{ section.id }} .ffl-card__state { font-family: var(--nav-font-family); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.7; margin: 0 0 6px; }
+  #shopify-section-{{ section.id }} .ffl-card__name { font-family: var(--heading-font-family); font-size: 24px; font-weight: 400; margin: 0 0 8px; }
+  #shopify-section-{{ section.id }} .ffl-card__addr, #shopify-section-{{ section.id }} .ffl-card__hours { font-family: var(--base-font-family); font-size: 12px; margin: 0 0 4px; opacity: 0.82; }
+  #shopify-section-{{ section.id }} .ffl-card__hours { opacity: 0.68; margin-bottom: 16px; }
+  #shopify-section-{{ section.id }} .ffl-card__cta { font-family: var(--nav-font-family); font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #fff; }
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} .ffl__grid { grid-template-columns: 1fr; }
+    #shopify-section-{{ section.id }} .ffl__head { flex-direction: column; align-items: flex-start; }
+  }
+  @media (min-width: 900px) {
+    #shopify-section-{{ section.id }} .ffl__heading { font-size: 52px; }
+    #shopify-section-{{ section.id }} .ffl-card__name { font-size: 28px; }
+  }
+  @media (min-width: 1440px) {
+    #shopify-section-{{ section.id }} .ffl__heading { font-size: 60px; }
+    #shopify-section-{{ section.id }} .ffl-card__name { font-size: 32px; }
+    #shopify-section-{{ section.id }} .ffl-card__img { aspect-ratio: 16/9; }
+  }
+{% endstyle %}
+
+<div class="fully-spaced-row--medium">
+  <div class="ffl">
+    <div class="ffl__head">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}<p class="ffl__eyebrow">{{ section.settings.eyebrow | escape }}</p>{%- endif -%}
+        {%- if section.settings.heading != blank -%}<h2 class="ffl__heading">{{ section.settings.heading }}</h2>{%- endif -%}
+      </div>
+      {%- if section.settings.viewall_label != blank -%}
+        <a class="ffl__viewall" href="{{ section.settings.viewall_link | default: '#' }}">{{ section.settings.viewall_label | escape }}</a>
+      {%- endif -%}
+    </div>
+    <div class="ffl__grid">
+      {%- for block in locs -%}
+        <a class="ffl-card" href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <img class="ffl-card__img" src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.name | escape }}" loading="lazy" width="500" height="375">
+          {%- else -%}
+            <div class="ffl-card__img placeholder-svg">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+          {%- endif -%}
+          <div class="ffl-card__overlay"></div>
+          <div class="ffl-card__body">
+            {%- if block.settings.state != blank -%}<p class="ffl-card__state">{{ block.settings.state | escape }}</p>{%- endif -%}
+            <h3 class="ffl-card__name">{{ block.settings.name | escape }}</h3>
+            {%- if block.settings.address != blank -%}<p class="ffl-card__addr">{{ block.settings.address | escape }}</p>{%- endif -%}
+            {%- if block.settings.hours != blank -%}<p class="ffl-card__hours">{{ block.settings.hours | escape }}</p>{%- endif -%}
+            {%- if block.settings.cta_label != blank -%}<span class="ffl-card__cta">{{ block.settings.cta_label | escape }}</span>{%- endif -%}
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "FF Locations",
+  "class": "section-ff-locations",
+  "disabled_on": { "groups": ["aside"] },
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "90+ Locations Nationwide" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Find Your <em>Foundrié.</em></p>" },
+    { "type": "text", "id": "viewall_label", "label": "View-all label", "default": "View All Locations →" },
+    { "type": "url", "id": "viewall_link", "label": "View-all link" }
+  ],
+  "blocks": [
+    {
+      "type": "location",
+      "name": "Location",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "state", "label": "State", "default": "MN" },
+        { "type": "text", "id": "name", "label": "Name", "default": "Edina" },
+        { "type": "text", "id": "address", "label": "Address" },
+        { "type": "text", "id": "hours", "label": "Hours" },
+        { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Book Now →" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    { "name": "FF Locations", "category": "Face Foundrié", "blocks": [ { "type": "location" }, { "type": "location" }, { "type": "location" } ] }
+  ]
+}
+{% endschema %}

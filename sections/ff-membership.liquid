@@ -1,0 +1,110 @@
+{% style %}
+  #shopify-section-{{ section.id }} .ffm {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    background: linear-gradient(90deg, #223128 0%, #30433A 30%, #485548 50%, #30433A 70%, #223128 100%);
+    min-height: clamp(520px, 44vw, 760px);
+  }
+  #shopify-section-{{ section.id }} .ffm__img-col { min-height: inherit; padding: 0; }
+  #shopify-section-{{ section.id }} .ffm__frame {
+    position: relative; width: 100%; height: 100%; overflow: hidden;
+  }
+  #shopify-section-{{ section.id }} .ffm__frame img {
+    width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block;
+    filter: saturate(0.85) brightness(1.02);
+  }
+  #shopify-section-{{ section.id }} .ffm__frame .placeholder-svg { width:100%; height:100%; }
+  #shopify-section-{{ section.id }} .ffm__content {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: var(--ff-section-y-tight) var(--ff-gutter); position: relative;
+  }
+  #shopify-section-{{ section.id }} .ffm__heading {
+    font-family: var(--heading-font-family);
+    font-weight: 400;
+    font-size: 42px;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: #F2ECE2;
+    margin: 0 0 24px;
+  }
+  #shopify-section-{{ section.id }} .ffm__copy-wrap { max-width: 520px; }
+  #shopify-section-{{ section.id }} .ffm__copy-wrap p {
+    font-family: var(--base-font-family);
+    font-size: 16px; font-weight: 300; line-height: 1.65; color: #D8D1C5; margin: 0 0 16px;
+  }
+  #shopify-section-{{ section.id }} .ffm__btn {
+    display: inline-block; margin-top: 36px;
+    font-family: var(--nav-font-family);
+    font-size: 10.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+    color: #30433A; background: #F4EFE7; padding: 17px 36px; text-decoration: none;
+    transition: opacity 0.25s; align-self: flex-start;
+  }
+  #shopify-section-{{ section.id }} .ffm__btn:hover { opacity: 0.88; }
+  #shopify-section-{{ section.id }} .ffm__badge {
+    position: absolute; bottom: clamp(28px, 3vw, 48px); right: clamp(28px, 4vw, 72px); width: clamp(82px, 7vw, 120px); height: clamp(82px, 7vw, 120px);
+    opacity: 0.75; animation: ffm-spin 20s linear infinite;
+  }
+  @keyframes ffm-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { #shopify-section-{{ section.id }} .ffm__badge { animation: none; } }
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} .ffm { grid-template-columns: 1fr; min-height: 0; }
+    #shopify-section-{{ section.id }} .ffm__img-col { min-height: 360px; }
+    #shopify-section-{{ section.id }} .ffm__content { padding: clamp(36px,8vw,56px) clamp(24px,7vw,40px); }
+    #shopify-section-{{ section.id }} .ffm__badge { display: none; }
+  }
+  @media (min-width: 900px) {
+    #shopify-section-{{ section.id }} .ffm__heading { font-size: 54px; }
+  }
+  @media (min-width: 1440px) {
+    #shopify-section-{{ section.id }} .ffm__heading { font-size: 64px; }
+    #shopify-section-{{ section.id }} .ffm__copy-wrap p { font-size: 17px; }
+  }
+{% endstyle %}
+
+<div class="fully-spaced-row--medium">
+  <div class="ffm">
+    <div class="ffm__img-col">
+      <div class="ffm__frame">
+        {%- if section.settings.image != blank -%}
+          <img src="{{ section.settings.image | image_url: width: 900 }}" alt="{{ section.settings.heading | escape }}" loading="lazy" width="600" height="700">
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+    </div>
+    <div class="ffm__content">
+      {%- if section.settings.heading != blank -%}<h2 class="ffm__heading">{{ section.settings.heading | escape }}</h2>{%- endif -%}
+      {%- if section.settings.copy != blank -%}<div class="ffm__copy-wrap">{{ section.settings.copy }}</div>{%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a class="ffm__btn" href="{{ section.settings.button_link | default: '#' }}">{{ section.settings.button_label | escape }}</a>
+      {%- endif -%}
+      {%- if section.settings.show_badge -%}
+        <svg class="ffm__badge" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs><path id="ffm-circle-{{ section.id }}" d="M 100,100 m -75,0 a 75,75 0 0,1 150,0 a 75,75 0 0,1 -150,0"/></defs>
+          <text font-size="13" fill="#D8D1C5" font-family="Montserrat, sans-serif" letter-spacing="4">
+            <textPath href="#ffm-circle-{{ section.id }}">· FACE FOUNDRIÉ · MEMBERSHIP ·&nbsp;&nbsp;</textPath>
+          </text>
+          <text x="100" y="107" text-anchor="middle" font-size="24" fill="#F2ECE2">✦</text>
+        </svg>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "FF Membership",
+  "class": "section-ff-membership",
+  "disabled_on": { "groups": ["aside"] },
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Skin In The Game." },
+    { "type": "richtext", "id": "copy", "label": "Copy", "default": "<p>Memberships designed for consistent results, exclusive savings, and expert guidance.</p><p>Your best skin isn't a one-time treatment — it's a routine.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Become a Member" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "checkbox", "id": "show_badge", "label": "Show spinning badge", "default": true }
+  ],
+  "presets": [ { "name": "FF Membership", "category": "Face Foundrié" } ]
+}
+{% endschema %}
