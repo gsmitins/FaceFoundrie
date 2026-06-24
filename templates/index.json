@@ -222,16 +222,6 @@
     },
     "membership": {
       "type": "ff-membership",
-      "settings": {
-        "image": "shopify://shop_images/tennis.png",
-        "heading": "Skin In The Game.",
-        "copy": "<p>Memberships designed for consistent results, exclusive savings, and expert guidance.</p><p>Your best skin isn't a one-time treatment — it's a routine.</p>",
-        "button_label": "Become a Member",
-        "button_link": "",
-        "show_badge": true,
-        "eyebrow": "Foundrie Membership",
-        "stack_heading": true
-      },
       "blocks": {
         "feature_monthly": {
           "type": "feature",
@@ -287,7 +277,17 @@
         "stat_members",
         "stat_locations",
         "stat_rating"
-      ]
+      ],
+      "settings": {
+        "image": "shopify://shop_images/tennis.png",
+        "eyebrow": "Foundrie Membership",
+        "heading": "Skin In The Game.",
+        "stack_heading": true,
+        "copy": "<p>Memberships designed for consistent results, exclusive savings, and expert guidance.</p><p>Your best skin isn't a one-time treatment — it's a routine.</p>",
+        "button_label": "Become a Member",
+        "button_link": "",
+        "show_badge": true
+      }
     },
     "rini_partner": {
       "type": "ff-rini",
@@ -310,6 +310,9 @@
       "block_order": [
         "s1",
         "s2"
+      ],
+      "custom_css": [
+        "@media (min-width: 1000px) {h2 {max-width: 390px; }}"
       ],
       "settings": {
         "heading": "Little Faces. Healthy Habits.",
@@ -369,6 +372,9 @@
         "l3",
         "l4",
         "l5"
+      ],
+      "custom_css": [
+        "h2{text-transform: uppercase; letter-spacing: 2px; text-align: center; margin-inline: auto; }"
       ],
       "settings": {
         "title": "As Seen In",
