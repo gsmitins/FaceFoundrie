@@ -7,11 +7,33 @@
 
 {% style %}
   #shopify-section-{{ section.id }} .ffm {
+    --ffm-min-height: {{ section.settings.min_height_desktop | default: 820 }}px;
+    --ffm-mobile-image-height: {{ section.settings.mobile_image_height | default: 360 }}px;
+    --ffm-content-max: {{ section.settings.content_max_width | default: 620 }}px;
+    --ffm-padding-y: {{ section.settings.content_padding_y | default: 88 }}px;
+    --ffm-padding-x: {{ section.settings.content_padding_x | default: 72 }}px;
+    --ffm-mobile-padding-y: {{ section.settings.mobile_padding_y | default: 56 }}px;
+    --ffm-mobile-padding-x: {{ section.settings.mobile_padding_x | default: 28 }}px;
+    --ffm-eyebrow-size: {{ section.settings.eyebrow_size | default: 11 }}px;
+    --ffm-heading-size: {{ section.settings.heading_size | default: 96 }}px;
+    --ffm-heading-mobile-size: {{ section.settings.heading_size_mobile | default: 56 }}px;
+    --ffm-copy-size: {{ section.settings.copy_size | default: 17 }}px;
+    --ffm-feature-size: {{ section.settings.feature_size | default: 17 }}px;
+    --ffm-stat-value-size: {{ section.settings.stat_value_size | default: 34 }}px;
+    --ffm-stat-label-size: {{ section.settings.stat_label_size | default: 10 }}px;
+    --ffm-button-size: {{ section.settings.button_size | default: 11 }}px;
+    --ffm-eyebrow-gap: {{ section.settings.eyebrow_gap | default: 34 }}px;
+    --ffm-divider-gap-top: {{ section.settings.divider_gap_top | default: 42 }}px;
+    --ffm-divider-gap-bottom: {{ section.settings.divider_gap_bottom | default: 34 }}px;
+    --ffm-feature-gap-top: {{ section.settings.feature_gap_top | default: 42 }}px;
+    --ffm-stat-gap-top: {{ section.settings.stat_gap_top | default: 42 }}px;
+    --ffm-button-gap-top: {{ section.settings.button_gap_top | default: 46 }}px;
+    --ffm-feature-row-height: {{ section.settings.feature_row_height | default: 56 }}px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: stretch;
     background: linear-gradient(90deg, #223128 0%, #30433A 30%, #485548 50%, #30433A 70%, #223128 100%);
-    min-height: clamp(620px, 50vw, 980px);
+    min-height: var(--ffm-min-height);
   }
   #shopify-section-{{ section.id }} .ffm__img-col { min-height: inherit; padding: 0; }
   #shopify-section-{{ section.id }} .ffm__frame {
@@ -24,26 +46,26 @@
   #shopify-section-{{ section.id }} .ffm__frame .placeholder-svg { width:100%; height:100%; }
   #shopify-section-{{ section.id }} .ffm__content {
     display: flex; flex-direction: column; justify-content: center;
-    padding: clamp(56px, 6vw, 112px) clamp(34px, 5vw, 96px); position: relative;
+    padding: var(--ffm-padding-y) var(--ffm-padding-x); position: relative;
     border-left: 1px solid rgba(242,236,226,0.1);
   }
   #shopify-section-{{ section.id }} .ffm__content-inner {
-    max-width: 640px;
+    max-width: var(--ffm-content-max);
     width: 100%;
   }
   #shopify-section-{{ section.id }} .ffm__eyebrow {
     font-family: var(--nav-font-family);
-    font-size: 12px;
+    font-size: var(--ffm-eyebrow-size);
     font-weight: 700;
     letter-spacing: 0.34em;
     text-transform: uppercase;
     color: rgba(242,236,226,0.44);
-    margin: 0 0 clamp(26px, 3vw, 46px);
+    margin: 0 0 var(--ffm-eyebrow-gap);
   }
   #shopify-section-{{ section.id }} .ffm__heading {
     font-family: var(--heading-font-family);
     font-weight: 400;
-    font-size: clamp(58px, 6.3vw, 124px);
+    font-size: var(--ffm-heading-size);
     line-height: 0.9;
     letter-spacing: 0;
     color: #F2ECE2;
@@ -58,27 +80,27 @@
     width: 100%;
     height: 1px;
     background: rgba(242,236,226,0.14);
-    margin: clamp(32px, 4vw, 58px) 0 clamp(26px, 3vw, 44px);
+    margin: var(--ffm-divider-gap-top) 0 var(--ffm-divider-gap-bottom);
   }
   #shopify-section-{{ section.id }} .ffm__copy-wrap { max-width: 520px; }
   #shopify-section-{{ section.id }} .ffm__copy-wrap p {
     font-family: var(--base-font-family);
-    font-size: 17px; font-weight: 300; line-height: 1.65; color: rgba(216,209,197,0.82); margin: 0 0 16px;
+    font-size: var(--ffm-copy-size); font-weight: 300; line-height: 1.65; color: rgba(216,209,197,0.82); margin: 0 0 16px;
   }
   #shopify-section-{{ section.id }} .ffm__features {
     max-width: 620px;
     list-style: none;
-    margin: clamp(38px, 4vw, 64px) 0 0;
+    margin: var(--ffm-feature-gap-top) 0 0;
     padding: 0;
   }
   #shopify-section-{{ section.id }} .ffm__feature {
     display: flex;
     align-items: center;
     gap: 18px;
-    min-height: 56px;
+    min-height: var(--ffm-feature-row-height);
     border-bottom: 1px solid rgba(242,236,226,0.1);
     font-family: var(--base-font-family);
-    font-size: 16px;
+    font-size: var(--ffm-feature-size);
     font-weight: 400;
     line-height: 1.35;
     color: rgba(242,236,226,0.82);
@@ -98,7 +120,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: clamp(28px, 4vw, 62px);
-    margin-top: clamp(38px, 4vw, 64px);
+    margin-top: var(--ffm-stat-gap-top);
   }
   #shopify-section-{{ section.id }} .ffm-stat {
     min-width: 90px;
@@ -106,7 +128,7 @@
   #shopify-section-{{ section.id }} .ffm-stat__value {
     display: block;
     font-family: var(--heading-font-family);
-    font-size: clamp(30px, 2.6vw, 46px);
+    font-size: var(--ffm-stat-value-size);
     font-weight: 400;
     line-height: 0.95;
     color: #F2ECE2;
@@ -115,7 +137,7 @@
     display: block;
     margin-top: 9px;
     font-family: var(--nav-font-family);
-    font-size: 11px;
+    font-size: var(--ffm-stat-label-size);
     font-weight: 700;
     letter-spacing: 0.2em;
     line-height: 1.2;
@@ -123,9 +145,9 @@
     color: rgba(242,236,226,0.5);
   }
   #shopify-section-{{ section.id }} .ffm__btn {
-    display: inline-block; margin-top: clamp(40px, 4vw, 68px);
+    display: inline-block; margin-top: var(--ffm-button-gap-top);
     font-family: var(--nav-font-family);
-    font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+    font-size: var(--ffm-button-size); font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
     color: #30433A; background: #F4EFE7; padding: 22px 58px; text-decoration: none;
     transition: opacity 0.25s; align-self: flex-start;
   }
@@ -138,20 +160,12 @@
   @media (prefers-reduced-motion: reduce) { #shopify-section-{{ section.id }} .ffm__badge { animation: none; } }
   @media (max-width: 749px) {
     #shopify-section-{{ section.id }} .ffm { grid-template-columns: 1fr; min-height: 0; }
-    #shopify-section-{{ section.id }} .ffm__img-col { min-height: 360px; }
-    #shopify-section-{{ section.id }} .ffm__content { padding: clamp(42px,8vw,64px) clamp(24px,7vw,40px); border-left: 0; }
-    #shopify-section-{{ section.id }} .ffm__heading { font-size: clamp(46px, 14vw, 70px); }
+    #shopify-section-{{ section.id }} .ffm__img-col { min-height: var(--ffm-mobile-image-height); }
+    #shopify-section-{{ section.id }} .ffm__content { padding: var(--ffm-mobile-padding-y) var(--ffm-mobile-padding-x); border-left: 0; }
+    #shopify-section-{{ section.id }} .ffm__heading { font-size: var(--ffm-heading-mobile-size); }
     #shopify-section-{{ section.id }} .ffm__stats { gap: 24px; }
     #shopify-section-{{ section.id }} .ffm__btn { width: 100%; max-width: 320px; text-align: center; padding-inline: 28px; }
     #shopify-section-{{ section.id }} .ffm__badge { display: none; }
-  }
-  @media (min-width: 900px) {
-    #shopify-section-{{ section.id }} .ffm__heading { font-size: clamp(68px, 6vw, 104px); }
-  }
-  @media (min-width: 1440px) {
-    #shopify-section-{{ section.id }} .ffm__heading { font-size: clamp(92px, 6.4vw, 132px); }
-    #shopify-section-{{ section.id }} .ffm__copy-wrap p { font-size: 19px; }
-    #shopify-section-{{ section.id }} .ffm__feature { font-size: 18px; }
   }
 {% endstyle %}
 
@@ -241,7 +255,32 @@
     { "type": "richtext", "id": "copy", "label": "Copy", "default": "<p>Memberships designed for consistent results, exclusive savings, and expert guidance.</p><p>Your best skin isn't a one-time treatment — it's a routine.</p>" },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Become a Member" },
     { "type": "url", "id": "button_link", "label": "Button link" },
-    { "type": "checkbox", "id": "show_badge", "label": "Show spinning badge", "default": true }
+    { "type": "checkbox", "id": "show_badge", "label": "Show spinning badge", "default": true },
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "min_height_desktop", "min": 560, "max": 1040, "step": 20, "unit": "px", "label": "Desktop minimum height", "default": 820 },
+    { "type": "range", "id": "mobile_image_height", "min": 280, "max": 520, "step": 20, "unit": "px", "label": "Mobile image height", "default": 360 },
+    { "type": "range", "id": "content_max_width", "min": 460, "max": 760, "step": 20, "unit": "px", "label": "Content max width", "default": 620 },
+    { "type": "range", "id": "content_padding_y", "min": 48, "max": 128, "step": 4, "unit": "px", "label": "Desktop vertical padding", "default": 88 },
+    { "type": "range", "id": "content_padding_x", "min": 32, "max": 120, "step": 4, "unit": "px", "label": "Desktop horizontal padding", "default": 72 },
+    { "type": "range", "id": "mobile_padding_y", "min": 36, "max": 84, "step": 4, "unit": "px", "label": "Mobile vertical padding", "default": 56 },
+    { "type": "range", "id": "mobile_padding_x", "min": 20, "max": 48, "step": 2, "unit": "px", "label": "Mobile horizontal padding", "default": 28 },
+    { "type": "header", "content": "Typography" },
+    { "type": "range", "id": "eyebrow_size", "min": 9, "max": 16, "step": 1, "unit": "px", "label": "Eyebrow size", "default": 11 },
+    { "type": "range", "id": "heading_size", "min": 58, "max": 132, "step": 2, "unit": "px", "label": "Desktop heading size", "default": 96 },
+    { "type": "range", "id": "heading_size_mobile", "min": 38, "max": 76, "step": 2, "unit": "px", "label": "Mobile heading size", "default": 56 },
+    { "type": "range", "id": "copy_size", "min": 14, "max": 20, "step": 1, "unit": "px", "label": "Copy size", "default": 17 },
+    { "type": "range", "id": "feature_size", "min": 14, "max": 20, "step": 1, "unit": "px", "label": "Feature bullet size", "default": 17 },
+    { "type": "range", "id": "stat_value_size", "min": 24, "max": 52, "step": 2, "unit": "px", "label": "Stat value size", "default": 34 },
+    { "type": "range", "id": "stat_label_size", "min": 9, "max": 14, "step": 1, "unit": "px", "label": "Stat label size", "default": 10 },
+    { "type": "range", "id": "button_size", "min": 10, "max": 14, "step": 1, "unit": "px", "label": "Button text size", "default": 11 },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "eyebrow_gap", "min": 16, "max": 56, "step": 2, "unit": "px", "label": "Space after eyebrow", "default": 34 },
+    { "type": "range", "id": "divider_gap_top", "min": 24, "max": 64, "step": 2, "unit": "px", "label": "Space above divider", "default": 42 },
+    { "type": "range", "id": "divider_gap_bottom", "min": 20, "max": 56, "step": 2, "unit": "px", "label": "Space below divider", "default": 34 },
+    { "type": "range", "id": "feature_gap_top", "min": 24, "max": 68, "step": 2, "unit": "px", "label": "Space above features", "default": 42 },
+    { "type": "range", "id": "stat_gap_top", "min": 24, "max": 68, "step": 2, "unit": "px", "label": "Space above stats", "default": 42 },
+    { "type": "range", "id": "button_gap_top", "min": 28, "max": 76, "step": 2, "unit": "px", "label": "Space above button", "default": 46 },
+    { "type": "range", "id": "feature_row_height", "min": 44, "max": 72, "step": 2, "unit": "px", "label": "Feature row height", "default": 56 }
   ],
   "blocks": [
     {
