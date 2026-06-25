@@ -373,7 +373,9 @@
         "review_3",
         "review_eGetjJ"
       ],
-      "custom_css": [],
+      "custom_css": [
+        "{width: 100%; max-width: var(--ff-content-max) !important; margin-right: auto; margin-left: auto;}"
+      ],
       "settings": {
         "subheading": "DON't TAKE OUR WORD FOR IT",
         "heading": "Results you'll see with your own eyes",
