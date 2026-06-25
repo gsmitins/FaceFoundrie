@@ -480,7 +480,7 @@
         ".fully-spaced-row--medium {margin-inline: auto; margin: 0 auto;}",
         ".logo-list {gap: 0;}",
         ".logo-list__logo {display: flex; align-items: center;}",
-        "{width: 100%; max-width: var(--ff-content-max) !important; margin-right: auto; margin-left: auto;}"
+        " {width: 100%; max-width: var(--ff-content-max) !important; margin-right: auto; margin-left: auto;}"
       ],
       "settings": {
         "title": "",
@@ -687,6 +687,9 @@
     },
     "blog_posts": {
       "type": "featured-blog",
+      "custom_css": [
+        "{width: 100%; max-width: var(--ff-content-max) !important; margin-right: auto; margin-left: auto;}"
+      ],
       "settings": {
         "title": "Blog Posts",
         "blog": "news",
