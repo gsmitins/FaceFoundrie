@@ -78,7 +78,8 @@
           "type": "menu",
           "settings": {
             "title": "Quick links",
-            "menu": "footer"
+            "menu": "footer",
+            "link_layout": "collapse"
           }
         },
         "1601308656020": {
@@ -97,7 +98,11 @@
         "1601308671932",
         "1601308656020"
       ],
+      "custom_css": [
+        "#pagefooter .section-footer .ff-footer-brandline{font-size: 11.4vw;}"
+      ],
       "settings": {
+        "brand_heading": "FACE FOUNDRIÉ",
         "lower_menu": "",
         "show_powered_by": true,
         "show_payment_icons": true,
