@@ -288,18 +288,39 @@
         "stat_rating"
       ],
       "custom_css": [
-        ".fully-spaced-row--medium {margin: 0;}",
-        "p,li {font-size: 17px !important;}"
+        ".fully-spaced-row--medium {margin: 0;}"
       ],
       "settings": {
         "image": "shopify://shop_images/imgi_20_Double-Referrals-June.webp",
         "eyebrow": "Foundrie Membership",
         "heading": "Skin In The Game.",
-        "stack_heading": true,
+        "stack_heading": false,
         "copy": "<p>Memberships designed for consistent results, exclusive savings, and expert guidance.</p><p>Your best skin isn't a one-time treatment — it's a routine.</p>",
         "button_label": "Become a Member",
         "button_link": "",
-        "show_badge": true
+        "show_badge": true,
+        "min_height_desktop": 820,
+        "mobile_image_height": 360,
+        "content_max_width": 620,
+        "content_padding_y": 88,
+        "content_padding_x": 72,
+        "mobile_padding_y": 56,
+        "mobile_padding_x": 28,
+        "eyebrow_size": 11,
+        "heading_size": 64,
+        "heading_size_mobile": 48,
+        "copy_size": 16,
+        "feature_size": 15,
+        "stat_value_size": 34,
+        "stat_label_size": 10,
+        "button_size": 11,
+        "eyebrow_gap": 30,
+        "divider_gap_top": 30,
+        "divider_gap_bottom": 30,
+        "feature_gap_top": 30,
+        "stat_gap_top": 30,
+        "button_gap_top": 30,
+        "feature_row_height": 44
       }
     },
     "rini_partner": {
