@@ -373,6 +373,7 @@
         "review_3",
         "review_eGetjJ"
       ],
+      "custom_css": [],
       "settings": {
         "subheading": "DON't TAKE OUR WORD FOR IT",
         "heading": "Results you'll see with your own eyes",
@@ -581,7 +582,7 @@
       ],
       "custom_css": [
         ".video-gallery__block .video-gallery__controls .mute-icon svg *:not(rect) {fill: black !important; stroke: black !important;}",
-        "@media (min-width: 1800px) {.video-gallery__wrapper {justify-content: center; }}"
+        ".video-gallery__wrapper {justify-content: center;}"
       ],
       "name": "LP Video Short",
       "settings": {
@@ -751,7 +752,9 @@
         "m3",
         "m4"
       ],
-      "custom_css": [],
+      "custom_css": [
+        "@media (min-width: 1800px) {.video-gallery__wrapper {justify-content: center; }}"
+      ],
       "settings": {
         "grid_desktop": 4,
         "grid_mobile": "2",
