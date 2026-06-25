@@ -596,7 +596,7 @@
         "mobile_video_gap": 15,
         "enable_navigation": true,
         "autoplay_videos": false,
-        "enable_auto_rotation": true,
+        "enable_auto_rotation": false,
         "rotation_duration": 10,
         "show_mute_button": true,
         "overlay_button_text": "View Product",
