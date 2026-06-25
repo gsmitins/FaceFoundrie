@@ -489,6 +489,144 @@
         "color_scheme": "default"
       }
     },
+    "lp_video_short_8nTiqp": {
+      "type": "lp-video-short",
+      "blocks": {
+        "video_pywnnG": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/Screen Recording 2026-06-25 at 19.27.18.mov",
+            "poster_image": "shopify://shop_images/Container.png",
+            "overlay_eyebrow": "",
+            "overlay_title": "",
+            "featured_product": "",
+            "product_position": "bottom-left",
+            "show_mute_button": true,
+            "show_product_button": false
+          }
+        },
+        "video_g3mMUx": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/Screen Recording 2026-06-25 at 19.27.18.mov",
+            "poster_image": "shopify://shop_images/Container-2.png",
+            "overlay_eyebrow": "",
+            "overlay_title": "",
+            "featured_product": "",
+            "product_position": "bottom-left",
+            "show_mute_button": true,
+            "show_product_button": false
+          }
+        },
+        "video_c3GDRT": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/Screen Recording 2026-06-25 at 19.27.18.mov",
+            "poster_image": "shopify://shop_images/Container-4.png",
+            "overlay_eyebrow": "",
+            "overlay_title": "",
+            "featured_product": "",
+            "product_position": "bottom-left",
+            "show_mute_button": true,
+            "show_product_button": false
+          }
+        },
+        "video_PDMHxq": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/Screen Recording 2026-06-25 at 19.27.18.mov",
+            "poster_image": "shopify://shop_images/Container-1.png",
+            "overlay_eyebrow": "",
+            "overlay_title": "",
+            "featured_product": "",
+            "product_position": "bottom-left",
+            "show_mute_button": true,
+            "show_product_button": false
+          }
+        },
+        "video_ArbHTi": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/Screen Recording 2026-06-25 at 19.27.18.mov",
+            "poster_image": "shopify://shop_images/Container-3.png",
+            "overlay_eyebrow": "",
+            "overlay_title": "",
+            "featured_product": "",
+            "product_position": "bottom-left",
+            "show_mute_button": true,
+            "show_product_button": false
+          }
+        },
+        "video_rP3jAz": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/Screen Recording 2026-06-25 at 19.27.18.mov",
+            "poster_image": "shopify://shop_images/Container-5.png",
+            "overlay_eyebrow": "",
+            "overlay_title": "",
+            "featured_product": "",
+            "product_position": "bottom-left",
+            "show_mute_button": true,
+            "show_product_button": false
+          }
+        }
+      },
+      "block_order": [
+        "video_pywnnG",
+        "video_g3mMUx",
+        "video_c3GDRT",
+        "video_PDMHxq",
+        "video_ArbHTi",
+        "video_rP3jAz"
+      ],
+      "custom_css": [
+        ".video-gallery__block .video-gallery__controls .mute-icon svg *:not(rect) {fill: black !important; stroke: black !important;}"
+      ],
+      "name": "LP Video Short",
+      "settings": {
+        "background_color": "#ffffff",
+        "use_custom_padding": true,
+        "padding_block": 82,
+        "padding_block_mobile": 35,
+        "style_variant": "default",
+        "desktop_columns": 5,
+        "video_width": 260,
+        "mobile_video_width": 210,
+        "video_gap": 15,
+        "mobile_video_gap": 15,
+        "enable_navigation": true,
+        "autoplay_videos": false,
+        "enable_auto_rotation": true,
+        "rotation_duration": 10,
+        "show_mute_button": true,
+        "overlay_button_text": "View Product",
+        "caption_text_color": "#ffffff",
+        "caption_eyebrow_color": "#ffffff",
+        "subheading": "Tell your story",
+        "title": "Confident skin starts here",
+        "use_theme_default_heading_size": false,
+        "use_custom": true,
+        "heading_max_width": 15,
+        "title_size": 64,
+        "title_size_mobile": 32,
+        "gap_text": 34,
+        "gap_text_mobile": 20,
+        "use_custom_button": false,
+        "button_radius": 0,
+        "button_max_v": 500,
+        "button_padding_v": 0,
+        "button_padding_h": 0,
+        "only_padd": false,
+        "button_font_size": 16,
+        "button_background": "",
+        "button_text_color": "",
+        "button_label": "Button text",
+        "button_link": "",
+        "arrow": false,
+        "button_width": 50,
+        "padding-button": 20
+      }
+    },
     "find_foundrie": {
       "type": "ff-locations",
       "blocks": {
@@ -643,6 +781,7 @@
     "trusted_reviews",
     "rini_partner",
     "press_logos",
+    "lp_video_short_8nTiqp",
     "find_foundrie",
     "blog_posts",
     "instagram_gallery"
