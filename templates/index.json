@@ -288,18 +288,39 @@
         "stat_rating"
       ],
       "custom_css": [
-        ".fully-spaced-row--medium {margin: 0;}",
-        "p, li {font-size: 17px !important;}"
+        ".fully-spaced-row--medium {margin: 0;}"
       ],
       "settings": {
         "image": "shopify://shop_images/imgi_20_Double-Referrals-June.webp",
         "eyebrow": "Foundrie Membership",
         "heading": "Skin In The Game.",
-        "stack_heading": true,
+        "stack_heading": false,
         "copy": "<p>Memberships designed for consistent results, exclusive savings, and expert guidance.</p><p>Your best skin isn't a one-time treatment — it's a routine.</p>",
         "button_label": "Become a Member",
         "button_link": "",
-        "show_badge": true
+        "show_badge": true,
+        "min_height_desktop": 820,
+        "mobile_image_height": 360,
+        "content_max_width": 620,
+        "content_padding_y": 88,
+        "content_padding_x": 72,
+        "mobile_padding_y": 56,
+        "mobile_padding_x": 28,
+        "eyebrow_size": 11,
+        "heading_size": 64,
+        "heading_size_mobile": 56,
+        "copy_size": 17,
+        "feature_size": 17,
+        "stat_value_size": 34,
+        "stat_label_size": 10,
+        "button_size": 11,
+        "eyebrow_gap": 34,
+        "divider_gap_top": 42,
+        "divider_gap_bottom": 34,
+        "feature_gap_top": 42,
+        "stat_gap_top": 42,
+        "button_gap_top": 46,
+        "feature_row_height": 56
       }
     },
     "trusted_reviews": {
@@ -308,6 +329,8 @@
         "review_1": {
           "type": "review",
           "settings": {
+            "before_after_image": "shopify://shop_images/results_ellie_450x_webp_0a95b35a-bf6a-4f6f-ab34-8b133c42a689.png",
+            "flag_image": "shopify://shop_images/QSJh6xA5BdB0wfTzHlH7P93CvNd9wwLO9Hy0QJQyED8hnpc6Gp1lpDEIYHj1ASGC7KGfOcrm9wtxiZnly7ZS7ybMf9yu5OscnxEvuT60_mBWe-UTqq31weLlJtDLaME1-kas8eZVDMAT84uueIk46M3a7jDt-xYjomnLqoj4ndpaVncmd0nR5WF_96fcb478-dea1-414b-aaa1-ccdb4253ffc7.jpg",
             "author": "Ellie V.",
             "review_title": "My skin returned to life!",
             "review_text": "\"I just turned 57 years. My skin was extremely dry and while using this product my skin RETURNED to LIFE! I am so impressed with it! You will not regret in purchasing it. I really see the change in my skin. Outstanding job!\""
@@ -316,6 +339,8 @@
         "review_2": {
           "type": "review",
           "settings": {
+            "before_after_image": "shopify://shop_images/results_glorija_450x_webp_30549a7d-c3b2-402d-b2ed-6d12456237f2.png",
+            "flag_image": "shopify://shop_images/QSJh6xA5BdB0wfTzHlH7P93CvNd9wwLO9Hy0QJQyED8hnpc6Gp1lpDEIYHj1ASGC7KGfOcrm9wtxiZnly7ZS7ybMf9yu5OscnxEvuT60_mBWe-UTqq31weLlJtDLaME1-kas8eZVDMAT84uueIk46M3a7jDt-xYjomnLqoj4ndpaVncmd0nR5WF_96fcb478-dea1-414b-aaa1-ccdb4253ffc7.jpg",
             "author": "Anton M.",
             "review_title": "Can't go a day without it",
             "review_text": "\"Straight away I noticed results. After the first week my skin looked clearer and more balanced. People ask me how I have got my skin to be hydrated and looking bright with reduced redness. I'm so reliant on it now. I don't think I can go a day without using it.\""
@@ -324,25 +349,21 @@
         "review_3": {
           "type": "review",
           "settings": {
+            "before_after_image": "shopify://shop_images/New_review_450x_png_55f86d00-e1f6-4ab1-9a51-073dd6a6db09.png",
+            "flag_image": "shopify://shop_images/QSJh6xA5BdB0wfTzHlH7P93CvNd9wwLO9Hy0QJQyED8hnpc6Gp1lpDEIYHj1ASGC7KGfOcrm9wtxiZnly7ZS7ybMf9yu5OscnxEvuT60_mBWe-UTqq31weLlJtDLaME1-kas8eZVDMAT84uueIk46M3a7jDt-xYjomnLqoj4ndpaVncmd0nR5WF.jpg",
             "author": "Jennifer N.",
             "review_title": "Works better than I imagined!",
             "review_text": "\"I am really stunned by how well this product works. I have had professional micro-needling and I wanted the benefits without the downtime. I did my treatment, went to bed and woke up the next morning and was ready to go. My skin looks better than it has in years.\""
           }
         },
-        "review_4": {
+        "review_eGetjJ": {
           "type": "review",
           "settings": {
-            "author": "Terri P.",
-            "review_title": "Wish I had this technology years ago!",
-            "review_text": "\"After two weeks I began to see results and after six weeks the changes in my skin were dramatic. I have now been using it for six months and loving the compliments! I bought some for my daughters for Christmas so they could start at a younger age. I am 76 years old!\""
-          }
-        },
-        "review_5": {
-          "type": "review",
-          "settings": {
-            "author": "Cassandra",
-            "review_title": "Can see the difference after one use!",
-            "review_text": "\"I did the patches last night and I swear just after one use I already see a result. The difference in my under-eye is wild!\""
+            "before_after_image": "shopify://shop_images/results_ellie_450x_webp_0a95b35a-bf6a-4f6f-ab34-8b133c42a689.png",
+            "flag_image": "shopify://shop_images/QSJh6xA5BdB0wfTzHlH7P93CvNd9wwLO9Hy0QJQyED8hnpc6Gp1lpDEIYHj1ASGC7KGfOcrm9wtxiZnly7ZS7ybMf9yu5OscnxEvuT60_mBWe-UTqq31weLlJtDLaME1-kas8eZVDMAT84uueIk46M3a7jDt-xYjomnLqoj4ndpaVncmd0nR5WF_96fcb478-dea1-414b-aaa1-ccdb4253ffc7.jpg",
+            "author": "Ellie V.",
+            "review_title": "My skin returned to life!",
+            "review_text": "\"I just turned 57 years. My skin was extremely dry and while using this product my skin RETURNED to LIFE! I am so impressed with it! You will not regret in purchasing it. I really see the change in my skin. Outstanding job!\""
           }
         }
       },
@@ -350,15 +371,14 @@
         "review_1",
         "review_2",
         "review_3",
-        "review_4",
-        "review_5"
+        "review_eGetjJ"
       ],
       "settings": {
         "heading": "Results you'll see with your own eyes",
         "bg_color": "#ffffff",
         "text_color": "#1a1a1a",
-        "padding_top": 72,
-        "padding_bottom": 72
+        "padding_top": 120,
+        "padding_bottom": 120
       }
     },
     "rini_partner": {
