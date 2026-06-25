@@ -61,7 +61,7 @@
         "card_focused": {
           "type": "service_card",
           "settings": {
-            "image": "shopify://shop_images/ffsvc-focused-facials.jpg",
+            "image": "shopify://shop_images/facefoundrie-115-1536x1024-1.jpg",
             "eyebrow": "Signature Service",
             "title": "Focused Facials",
             "detail": "50 or 80 min · Customized to your skin",
@@ -72,7 +72,7 @@
         "card_acne": {
           "type": "service_card",
           "settings": {
-            "image": "shopify://shop_images/ffsvc-acne-agent.jpg",
+            "image": "shopify://shop_images/imgi_13_chemicalpeel-1536x1058-1.webp",
             "eyebrow": "Targeted Treatment",
             "title": "The Acne Agent",
             "detail": "Enzyme + extractions + peel · 50 min",
@@ -83,7 +83,7 @@
         "card_brow": {
           "type": "service_card",
           "settings": {
-            "image": "shopify://shop_images/ffsvc-brow-lashes.jpg",
+            "image": "shopify://shop_images/imgi_26_browtint-1536x1058-1.webp",
             "eyebrow": "Brows & Lashes",
             "title": "Brow Lovin'",
             "detail": "",
@@ -94,7 +94,7 @@
         "card_enhance": {
           "type": "service_card",
           "settings": {
-            "image": "shopify://shop_images/ffsvc-enhancements.jpg",
+            "image": "shopify://shop_images/imgi_12_dermababe-1536x1058-1.webp",
             "eyebrow": "Add-Ons",
             "title": "Enhancements",
             "detail": "",
@@ -251,6 +251,7 @@
         },
         "feature_esthetician": {
           "type": "feature",
+          "disabled": true,
           "settings": {
             "text": "Dedicated esthetician"
           }
@@ -272,7 +273,7 @@
         "stat_rating": {
           "type": "stat",
           "settings": {
-            "value": "5★",
+            "value": "4.8★",
             "label": "Avg rating"
           }
         }
@@ -287,10 +288,11 @@
         "stat_rating"
       ],
       "custom_css": [
-        ".fully-spaced-row--medium {margin: 0;}"
+        ".fully-spaced-row--medium {margin: 0;}",
+        "p, li {font-size: 17px !important;}"
       ],
       "settings": {
-        "image": "shopify://shop_images/tennis.png",
+        "image": "shopify://shop_images/imgi_20_Double-Referrals-June.webp",
         "eyebrow": "Foundrie Membership",
         "heading": "Skin In The Game.",
         "stack_heading": true,
