@@ -157,6 +157,9 @@
         "txt",
         "btn"
       ],
+      "custom_css": [
+        ".fully-spaced-row--medium {margin: 0;}"
+      ],
       "settings": {
         "height": "medium",
         "text_alignment": "center",
@@ -278,6 +281,9 @@
         "stat_locations",
         "stat_rating"
       ],
+      "custom_css": [
+        ".fully-spaced-row--medium {margin: 0;}"
+      ],
       "settings": {
         "image": "shopify://shop_images/tennis.png",
         "eyebrow": "Foundrie Membership",
@@ -312,7 +318,8 @@
         "s2"
       ],
       "custom_css": [
-        "@media (min-width: 1000px) {h2 {max-width: 390px; }}"
+        "@media (min-width: 1000px) {h2 {max-width: 390px; }}",
+        ".fully-spaced-row--medium {margin: 0;}"
       ],
       "settings": {
         "heading": "Little Faces. Healthy Habits.",
