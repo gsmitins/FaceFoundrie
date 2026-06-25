@@ -580,7 +580,8 @@
         "video_rP3jAz"
       ],
       "custom_css": [
-        ".video-gallery__block .video-gallery__controls .mute-icon svg *:not(rect) {fill: black !important; stroke: black !important;}"
+        ".video-gallery__block .video-gallery__controls .mute-icon svg *:not(rect) {fill: black !important; stroke: black !important;}",
+        "@media (min-width: 1800px) {.video-gallery__wrapper {justify-content: center; }}"
       ],
       "name": "LP Video Short",
       "settings": {
@@ -750,9 +751,7 @@
         "m3",
         "m4"
       ],
-      "custom_css": [
-        "@media (min-width: 1800px){.video-gallery__wrapper {justify-content: center;}}"
-      ],
+      "custom_css": [],
       "settings": {
         "grid_desktop": 4,
         "grid_mobile": "2",
