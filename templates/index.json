@@ -750,6 +750,9 @@
         "m3",
         "m4"
       ],
+      "custom_css": [
+        "@media (min-width: 1800px){.video-gallery__wrapper {justify-content: center;}}"
+      ],
       "settings": {
         "grid_desktop": 4,
         "grid_mobile": "2",
