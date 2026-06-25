@@ -289,7 +289,7 @@
       ],
       "custom_css": [
         ".fully-spaced-row--medium {margin: 0;}",
-        "p, li {font-size: 17px !important;}"
+        "p,li {font-size: 17px !important;}"
       ],
       "settings": {
         "image": "shopify://shop_images/imgi_20_Double-Referrals-June.webp",
@@ -392,7 +392,7 @@
         ".fully-spaced-row--medium {margin-inline: auto; margin: 0 auto;}"
       ],
       "settings": {
-        "title": "As Seen In",
+        "title": "",
         "show_title": true,
         "layout": "grid",
         "full_width": false,
