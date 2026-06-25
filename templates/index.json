@@ -37,7 +37,9 @@
         "slide_1"
       ],
       "custom_css": [
-        "h1.text-overlay__title.has-motion {max-width: 6em;}"
+        "h1.text-overlay__title.has-motion {max-width: 6em;}",
+        ".text-overlay__inner {width: 50%;}",
+        ".image-overlay__over.has-motion {justify-content: left;}"
       ],
       "settings": {
         "height": "adapt",
