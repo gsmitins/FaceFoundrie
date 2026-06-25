@@ -1,0 +1,1742 @@
+<section class="global-inner-padding video-gallery section-id-{{ section.id }} video-gallery--{{ section.settings.style_variant }}">
+
+  {% if section.settings.subheading != blank %}
+    <div style="display: flex; justify-content: center;" class="text-overlay__subheading subheading subheading--over lightish-spaced-row-above">
+      {{ section.settings.subheading | escape }}
+    </div>
+  {% endif %}
+
+  {% if section.settings.title != blank %}
+    <div class="upper-wrapper-head">
+      <div class="header-wrap-lp">
+        <h2 class="global-header text-overlay__title for-gustavs-lp h1 Heading">{{ section.settings.title }}</h2>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="video-gallery__container">
+    {% if section.settings.enable_navigation and section.settings.style_variant != 'social-proof' %}
+      <button class="video-gallery__nav video-gallery__nav--prev" aria-label="Previous videos">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button class="video-gallery__nav video-gallery__nav--next" aria-label="Next videos">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    {% endif %}
+    
+    <div class="video-gallery__wrapper video-gallery__wrapper--{{ section.settings.style_variant }}">
+      {% for block in section.blocks %}
+        <div class="video-gallery__block block-id-{{ block.id }}">
+          {% if block.settings.video != blank %}
+            {% liquid
+              if block.settings.poster_image != blank
+                assign poster_url = block.settings.poster_image | image_url: width: 1200
+              else
+                assign poster_url = block.settings.video.preview_image | image_url: width: 1200
+              endif
+            %}
+            {{ block.settings.video | video_tag: autoplay: section.settings.autoplay_videos, controls: false, loop: true, muted: true, poster: poster_url, class: "lazy-video" }}
+            
+            {% if block.settings.featured_product != blank %}
+              {% assign product = block.settings.featured_product %}
+              <div class="video-product-overlay video-product-overlay--{{ block.settings.product_position }}" data-block-id="{{ block.id }}">
+                                <button class="video-product-overlay__close" aria-label="Close product details" data-video-overlay-close="true">
+                  {%- render 'icon-close' -%}
+                </button>
+                <div class="video-product-overlay__content">
+                  {% if product.featured_image %}
+                    <div class="video-product-overlay__image">
+                      <img src="{{ product.featured_image | image_url: width: 80 }}" alt="{{ product.title | escape }}" width="80" height="80" loading="lazy">
+                    </div>
+                  {% endif %}
+                  <div class="video-product-overlay__details">
+                    <h4 class="video-product-overlay__title">{{ product.title | truncate: 50 }}</h4>
+                    <div class="video-product-overlay__price">
+                      {% if product.compare_at_price > product.price %}
+                        <span class="video-product-overlay__price-compare">{{ product.compare_at_price | money }}</span>
+                      {% endif %}
+                      <span class="video-product-overlay__price-current">from {{ product.price | money }}</span>
+                    </div>
+                    <a href="{{ product.url }}" class="video-product-overlay__button">
+                      {{ section.settings.overlay_button_text | default: 'View Product' }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            
+            {% if section.settings.style_variant == 'social-proof' %}
+              {% if block.settings.overlay_title != blank or block.settings.overlay_eyebrow != blank %}
+                <div class="video-gallery__proof-overlay">
+                  {% if block.settings.overlay_eyebrow != blank %}
+                    <p class="video-gallery__proof-eyebrow">{{ block.settings.overlay_eyebrow | escape }}</p>
+                  {% endif %}
+                  {% if block.settings.overlay_title != blank %}
+                    <p class="video-gallery__proof-title">{{ block.settings.overlay_title | escape }}</p>
+                  {% endif %}
+                </div>
+              {% endif %}
+            {% endif %}
+
+            <div class="video-gallery__controls video-gallery__controls--{{ section.settings.style_variant }}">
+              <button class="video-gallery__btn play-btn" data-block-id="block-id-{{ block.id }}">
+                <span class="play-icon">{% render 'lp-sound', icon: 'play' %}</span>
+                <span class="pause-icon" style="display: none;">{% render 'lp-sound', icon: 'pause' %}</span>
+              </button>
+              {% if section.settings.style_variant != 'social-proof' %}
+                {% if section.settings.show_mute_button or block.settings.show_mute_button %}
+                  <button class="video-gallery__btn mute-btn" data-block-id="block-id-{{ block.id }}">
+                    <span class="sound-icon" style="display: none;">{% render 'lp-sound', icon: 'sound' %}</span>
+                    <span class="mute-icon">{% render 'lp-sound', icon: 'mute' %}</span>
+                  </button>
+                {% endif %}
+              {% endif %}
+              {% if section.settings.style_variant != 'social-proof' and block.settings.featured_product != blank and block.settings.show_product_button %}
+                <button class="video-gallery__btn product-btn" data-block-id="block-id-{{ block.id }}" aria-label="Show product details">
+                  {% render 'icon-bag' %}
+                </button>
+              {% endif %}
+            </div>
+          {% else %}
+            <img src="{{ block.settings.poster_image | image_url }}" alt="Video Poster" width="300" height="200">
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% if section.settings.button_link != blank %}
+    <div class="gustavs-lp-button-wrap section-id-block-{{ section.id }}">
+      <a class="gustavs-lp-button" href="{{ section.settings.button_link }}">
+        {{ section.settings.button_label | escape }}
+        {% if section.settings.arrow %}
+          <span class="arrow-cont-button">{% render 'lp-icon-chevron-right' %}</span>
+        {% endif %}
+      </a>
+    </div>
+  {% endif %}
+
+</section>
+
+<style>
+
+  
+   .section-id-{{ section.id }} { 
+
+    h2.global-header.text-overlay__title {
+    text-align: center;
+}
+
+
+
+    .text-overlay__subheading {
+    line-height: 1.5em;
+    text-align: center;
+    padding-inline: 10px;
+}
+    
+    .text-overlay__title {
+    margin-top: 10px !important;
+    font-style: normal;
+    padding-inline: 15px;
+    }
+
+    background-color: {{ section.settings.background_color }};
+  {% if section.settings.use_custom_padding %} padding-block: {{ section.settings.padding_block }}px; {% endif %}
+ 
+  }
+   {% if section.settings.use_custom_padding %}
+  @media (max-width: 767px){
+    .section-id-{{ section.id }} {  
+   padding-block: {{ section.settings.padding_block_mobile }}px; 
+  }
+  }
+     {% endif %}
+  
+   .section-id-{{ section.id }} .for-gustavs-lp {
+    --heading-max-width: {{ section.settings.heading_max_width }}em;
+   }
+
+  {% if section.settings.use_theme_default_heading_size %}
+  .section-id-{{ section.id }} h2.global-header.text-overlay__title.for-gustavs-lp.h1.Heading {
+    font-size: calc(var(--typeHeaderSize) * 0.73);
+  }
+
+  @media only screen and (min-width: 769px) {
+    .section-id-{{ section.id }} h2.global-header.text-overlay__title.for-gustavs-lp.h1.Heading {
+      font-size: calc(var(--typeHeaderSize) * 0.85);
+    }
+  }
+  {% endif %}
+
+  {% if section.settings.use_custom and section.settings.use_theme_default_heading_size == false %}
+  
+  .section-id-{{ section.id }} .for-gustavs-lp {
+    font-size: {{ section.settings.title_size_mobile }}px;
+    {% if section.settings.title_size_mobile >= 90 %} line-height: 1em; {% endif %}
+  }
+  @media (min-width: 768px) {
+    .section-id-{{ section.id }} .for-gustavs-lp {
+      {% assign title_size_medium = section.settings.title_size | times: 0.7 | at_least: section.settings.title_size_mobile %}
+      font-size: {{ title_size_medium }}px;
+      {% if title_size_medium >= 90 %} line-height: 1em; {% endif %}
+    }
+  }
+  @media (min-width: 1100px) {
+    .section-id-{{ section.id }} .for-gustavs-lp {
+      font-size: {{ section.settings.title_size }}px;
+      {% if section.settings.title_size >= 90 %} line-height: 1em; {% endif %}
+    }
+  }
+    {% endif %}
+
+ 
+  
+  .section-id-block-{{ section.id }} {
+    margin-top: {{ section.settings.gap_text }}px !important; 
+
+      {% if section.settings.use_custom_button %}
+    .gustavs-lp-button {
+      max-width: {{ section.settings.button_max_v }}px;
+      padding-block: {{ section.settings.button_padding_v }}px;
+      padding-inline: {{ section.settings.button_padding_h }}px;
+      {% unless section.settings.only_padd %} width: {{ section.settings.button_width }}%; {% endunless %}
+      border: none;
+      background: {{ section.settings.button_background }};
+      color: {{ section.settings.button_text_color }};
+      border-radius: {{ section.settings.button_radius }}px;
+      font-size: {{ section.settings.button_font_size }}px;
+    }
+    .arrow-cont-button {
+      font-size: calc({{ section.settings.button_font_size }}px + 4px);
+    }
+   {% endif %}
+  }
+  @media (max-width: 767px) {
+    .section-id-block-{{ section.id }} {
+      margin-top: {{ section.settings.gap_text_mobile }}px !important; 
+    }
+  }
+  .section-id-{{ section.id }} .upper-wrapper-head {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: {{ section.settings.gap_text }}px;
+    position: relative;
+  }
+  @media (max-width: 767px) {
+    .section-id-{{ section.id }} .upper-wrapper-head {
+      gap: 5px;
+      margin-bottom: {{ section.settings.gap_text_mobile }}px;
+    }
+  }
+  .video-gallery {
+    .SectionHeader__Heading {
+      margin-inline: auto;
+    }
+  }
+  
+  .video-gallery__container {
+    position: relative;
+    margin-top: 40px;
+  }
+  
+  .video-gallery__wrapper {
+    display: flex;
+    gap: {{ section.settings.video_gap }}px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    padding: 0 20px;
+  }
+  
+  .video-gallery__wrapper::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+  
+  .video-gallery__block {
+    flex: 0 0 {{ section.settings.video_width }}px;
+    position: relative;
+    scroll-snap-align: start;
+  }
+  
+  .video-gallery__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .video-gallery__nav:hover {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .video-gallery__nav--prev {
+    left: 10px;
+  }
+  
+  .video-gallery__nav--next {
+    right: 10px;
+  }
+  
+  .video-gallery__nav.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+  
+  @media (min-width: 641px) {
+    .video-gallery__wrapper {
+      scroll-snap-type: x mandatory;
+      padding: 0;
+    }
+    .video-gallery__block {
+      scroll-snap-align: center;
+    }
+    
+    .video-gallery__container:hover .video-gallery__nav {
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .video-gallery__wrapper {
+      scroll-snap-type: x mandatory;
+      gap: {{ section.settings.mobile_video_gap }}px;
+    }
+    .video-gallery__block {
+      flex: 0 0 min({{ section.settings.mobile_video_width }}px, 90vw);
+      scroll-snap-align: center;
+    }
+    .video-gallery__block:first-child {
+      margin-left: 10px;
+    }
+    .video-gallery__block:last-child {
+      margin-right: 10px;
+    }
+    
+    .video-gallery__nav {
+      display: none; /* Hide nav buttons on mobile */
+    }
+  }
+  .video-gallery__container video {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .video-gallery__video {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .video-gallery__controls {
+    position: absolute;
+    bottom: 16px;
+    opacity: 0.7;
+    left: 10px;
+    display: flex;
+    gap: 5px;
+  }
+  .video-gallery__controls .mute-icon svg * rect {
+    fill: none !important;
+    stroke: none;
+}
+.video-gallery__controls .mute-icon svg *:not(rect) {
+    fill: none !important;
+    stroke: white !important;
+}
+.video-gallery__block .video-gallery__controls .mute-icon svg *:not(rect) {
+    fill: white !important;
+}
+
+.video-gallery__controls .sound-icon svg * rect {
+    fill: none !important;
+    stroke: none;
+}
+.video-gallery__controls .sound-icon svg *:not(rect) {
+    fill: none !important;
+    stroke: white !important;
+}
+.video-gallery__block .video-gallery__controls .sound-icon svg *:not(rect) {
+    fill: white !important;
+}
+
+  .video-gallery__btn {
+    background: none;
+    border: none;
+    color: #000000ff;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0;
+    opacity: 0.65;
+}
+.video-gallery__controls:hover .video-gallery__btn,
+.video-gallery__block.video-playing .video-gallery__controls .video-gallery__btn {
+    opacity: 1;
+}
+
+  .video-gallery__wrapper {
+       padding-inline: 40px;
+}
+
+  .video-gallery--social-proof .text-overlay__subheading {
+    color: {{ section.settings.caption_eyebrow_color }};
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+
+  .video-gallery--social-proof .text-overlay__title {
+    font-weight: 800;
+    margin-top: 0 !important;
+  }
+
+  .video-gallery--social-proof .upper-wrapper-head {
+    margin-bottom: 26px;
+  }
+
+  .video-gallery--social-proof .video-gallery__container {
+    margin-top: 0;
+    max-width: 1360px;
+    padding-inline: 24px;
+    margin-inline: auto;
+  }
+
+  .video-gallery--social-proof .video-gallery__wrapper {
+    padding-inline: 0;
+  }
+
+  .video-gallery--social-proof .video-gallery__block {
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.14);
+  }
+
+  .video-gallery--social-proof .video-gallery__block::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.04) 40%, rgba(0, 0, 0, 0.72) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .video-gallery--social-proof .video-gallery__container video,
+  .video-gallery--social-proof .video-gallery__block > img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 9 / 16;
+    object-fit: cover;
+    border-radius: 18px;
+    display: block;
+  }
+
+  .video-gallery--social-proof .video-gallery__proof-overlay {
+    position: absolute;
+    inset: auto 0 0;
+    padding: 18px 16px 16px;
+    color: {{ section.settings.caption_text_color }};
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .video-gallery--social-proof .video-gallery__proof-eyebrow,
+  .video-gallery--social-proof .video-gallery__proof-title {
+    margin: 0;
+  }
+
+  .video-gallery--social-proof .video-gallery__proof-eyebrow {
+    color: {{ section.settings.caption_eyebrow_color }};
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+
+  .video-gallery--social-proof .video-gallery__proof-title {
+    font-size: 19px;
+    font-weight: 800;
+    line-height: 1.15;
+    max-width: 11ch;
+  }
+
+  .video-gallery--social-proof .video-gallery__controls {
+    inset: 0;
+    left: 0;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .video-gallery--social-proof .video-gallery__btn {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .video-gallery--social-proof .video-gallery__controls .video-gallery__btn:not(.play-btn) {
+    display: none;
+  }
+
+  .video-gallery--social-proof .video-gallery__controls svg {
+    width: 54px;
+    padding: 14px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  .video-gallery--social-proof .video-gallery__nav,
+  .video-gallery--social-proof .video-product-overlay {
+    display: none !important;
+  }
+
+  @media (min-width: 990px) {
+    .video-gallery--social-proof .video-gallery__wrapper {
+      display: grid;
+      grid-template-columns: repeat({{ section.settings.desktop_columns }}, minmax(0, 1fr));
+      gap: {{ section.settings.video_gap }}px;
+      overflow: visible;
+      scroll-snap-type: none;
+    }
+
+    .video-gallery--social-proof .video-gallery__block {
+      flex: initial;
+      scroll-snap-align: none;
+    }
+  }
+
+  @media (max-width: 989px) {
+    .video-gallery--social-proof .video-gallery__container {
+      padding-inline: 0;
+    }
+
+    .video-gallery--social-proof .video-gallery__wrapper {
+      gap: {{ section.settings.mobile_video_gap }}px;
+      padding-inline: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+    }
+
+    .video-gallery--social-proof .video-gallery__block {
+      flex: 0 0 min({{ section.settings.mobile_video_width }}px, 58vw);
+      scroll-snap-align: start;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .video-gallery--social-proof .video-gallery__proof-overlay {
+      padding: 16px 14px 14px;
+    }
+
+    .video-gallery--social-proof .video-gallery__proof-title {
+      font-size: 17px;
+    }
+
+    .video-gallery--social-proof .video-gallery__controls svg {
+      width: 48px;
+      padding: 12px;
+    }
+  }
+  .video-gallery__controls svg {
+    width: 36px;
+    height: auto;
+    background: white;
+    padding: 10px;
+    border-radius: 100px;
+  }
+  
+  .video-gallery__btn.product-btn {
+    position: relative;
+  }
+  
+  .video-gallery__btn.product-btn svg {
+    background: rgba(255, 255, 255, 0.95);
+    transition: all 0.2s ease;
+  }
+  
+  .video-gallery__btn.product-btn:hover svg,
+  .video-gallery__btn.product-btn.active svg {
+    background: white;
+  }
+  
+  /* Product Overlay Styles */
+  .video-product-overlay {
+    position: absolute;
+    z-index: 5;
+    max-width: 100%;
+    min-width: 180px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+  
+  /* Show overlay when button is active */
+  .video-gallery__block.show-product-overlay .video-product-overlay {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    pointer-events: all;
+  }
+  
+  /* Only show on hover if not actively closed by user AND not currently showing via button */
+  .video-gallery__block:hover .video-product-overlay:not(.video-product-overlay--closed):not(.video-product-overlay--user-controlled) {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+  
+  /* Ensure closed state overrides everything */
+  .video-product-overlay.video-product-overlay--closed {
+    opacity: 0 !important;
+    transform: translateY(10px) !important;
+    pointer-events: none !important;
+  }
+  
+  .video-product-overlay__content {
+    background: rgba(255, 255, 255, 0.61);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .video-product-overlay__image {
+    flex-shrink: 0;
+  }
+  
+  .video-product-overlay__image img {
+    width: 80px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+  
+  .video-product-overlay__details {
+    flex: 1;
+    color: white;
+  }
+  
+  .video-product-overlay__title {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+    line-height: 1.2;
+  }
+  
+  .video-product-overlay__price {
+    margin: 0 0 8px 0;
+    color: #000;
+  }
+  
+  .video-product-overlay__price-compare {
+    text-decoration: line-through;
+    opacity: 0.7;
+    font-size: 12px;
+    margin-right: 4px;
+  }
+  
+  .video-product-overlay__price-current {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  
+  .video-product-overlay__button {
+    background: #000000;
+    color: #ffffff;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 00px;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s ease;
+  }
+  
+  .video-product-overlay__button:hover {
+    background: #333333;
+  }
+  
+  .video-product-overlay__close {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    width: 23px;
+    height: 23px;
+    background: white;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+    transition: background-color 0.2s ease;
+  }
+  
+  .video-product-overlay__close:hover {
+    background: #333333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .video-product-overlay__close svg {
+    width: 16px;
+    height: 16px;
+    color: #666;
+  }
+  
+  .video-product-overlay__close:hover svg {
+    color: #333;
+  }
+  
+  /* Position variants */
+  .video-product-overlay--bottom-left {
+    bottom: 58px;
+    left: 10px;
+    right: 10px;
+}
+
+  
+  .video-product-overlay--bottom-right {
+    bottom: 58px;
+    right: 15px;
+  }
+  
+  .video-product-overlay--top-left {
+    top: 15px;
+    left: 15px;
+  }
+  
+  .video-product-overlay--top-right {
+    top: 15px;
+    right: 15px;
+  }
+  
+  .video-product-overlay--center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) translateY(10px);
+  }
+  
+  .video-gallery__block.show-product-overlay .video-product-overlay--center,
+  .video-gallery__block:hover .video-product-overlay--center {
+    transform: translate(-50%, -50%) translateY(0);
+  }
+  
+  @media (max-width: 640px) {
+        .video-product-overlay {
+        max-width: 100%;
+        min-width: 180px;
+    }
+    .video-product-overlay--bottom-left {
+    bottom: 10px;
+    }
+    
+    .video-product-overlay__content {
+      padding: 10px;
+      gap: 10px;
+    }
+    
+    .video-product-overlay__image img {
+      width: 80px;
+      height: auto;
+    }
+    
+    .video-product-overlay__title {
+      font-size: 13px;
+    }
+    
+    .video-product-overlay__price-current {
+      font-size: 12px;
+    }
+    
+    .video-product-overlay__button {
+      padding: 5px 12px;
+      font-size: 11px;
+    }
+  }
+</style>
+
+<script defer>
+  document.addEventListener('DOMContentLoaded', function() {
+    const autoplayEnabled = {{ section.settings.autoplay_videos | json }};
+    const autoRotationEnabled = {{ section.settings.enable_auto_rotation | json }};
+    const rotationDuration = {{ section.settings.rotation_duration | default: 10 }} * 1000; // Convert to milliseconds
+    
+    let currentRotationIndex = 0;
+    let rotationInterval = null;
+    let restartTimeout = null;
+    let isProgrammaticRotationScroll = false;
+    let programmaticScrollTimeout = null;
+    
+    // Initialize play/pause button states based on autoplay setting
+    if (autoplayEnabled || autoRotationEnabled) {
+      document.querySelectorAll('.section-id-{{ section.id }} .play-btn').forEach(function(button) {
+        button.querySelector('.play-icon').style.display = 'none';
+        button.querySelector('.pause-icon').style.display = 'inline';
+      });
+    }
+    
+    // Auto-rotation functionality
+    if (autoRotationEnabled) {
+      const videoBlocks = document.querySelectorAll('.section-id-{{ section.id }} .video-gallery__block');
+      const videos = Array.from(videoBlocks).map(block => block.querySelector('video')).filter(v => v);
+      
+      if (videos.length > 0) {
+        // Stop all videos initially
+        videos.forEach(video => {
+          video.pause();
+          video.currentTime = 0;
+        });
+        
+        // Function to play a specific video
+        function playVideoAtIndex(index) {
+          // Pause all videos and remove playing state
+          videos.forEach((video, i) => {
+            video.pause();
+            videoBlocks[i].classList.remove('video-playing');
+            const playBtn = videoBlocks[i].querySelector('.play-btn');
+            if (playBtn) {
+              playBtn.querySelector('.play-icon').style.display = 'inline';
+              playBtn.querySelector('.pause-icon').style.display = 'none';
+            }
+          });
+          
+          // Play the current video and add playing state
+          if (videos[index]) {
+            videos[index].currentTime = 0;
+            videos[index].muted = true; // Always mute during auto-rotation
+            videos[index].play();
+            videoBlocks[index].classList.add('video-playing');
+            
+            // Update play button
+            const playBtn = videoBlocks[index].querySelector('.play-btn');
+            if (playBtn) {
+              playBtn.querySelector('.play-icon').style.display = 'none';
+              playBtn.querySelector('.pause-icon').style.display = 'inline';
+            }
+            
+            // Update mute button to show muted state
+            const muteBtn = videoBlocks[index].querySelector('.mute-btn');
+            if (muteBtn) {
+              muteBtn.querySelector('.sound-icon').style.display = 'none';
+              muteBtn.querySelector('.mute-icon').style.display = 'inline';
+            }
+            
+            // Scroll video horizontally into view within the wrapper (no vertical page scroll)
+            if (videoBlocks[index]) {
+              const wrapper = videoBlocks[index].closest('.video-gallery__wrapper');
+              if (wrapper) {
+                isProgrammaticRotationScroll = true;
+                if (programmaticScrollTimeout) {
+                  clearTimeout(programmaticScrollTimeout);
+                }
+                const blockLeft = videoBlocks[index].offsetLeft;
+                const blockWidth = videoBlocks[index].offsetWidth;
+                const wrapperWidth = wrapper.offsetWidth;
+                const scrollLeft = blockLeft - (wrapperWidth / 2) + (blockWidth / 2);
+                
+                wrapper.scrollTo({
+                  left: scrollLeft,
+                  behavior: 'smooth'
+                });
+
+                programmaticScrollTimeout = setTimeout(() => {
+                  isProgrammaticRotationScroll = false;
+                }, 700);
+              }
+            }
+          }
+        }
+        
+        // Start rotation
+        function startRotation() {
+          // Always clear existing interval first to prevent multiple intervals
+          if (rotationInterval) {
+            clearInterval(rotationInterval);
+            rotationInterval = null;
+          }
+          
+          playVideoAtIndex(currentRotationIndex);
+          
+          rotationInterval = setInterval(() => {
+            currentRotationIndex = (currentRotationIndex + 1) % videos.length;
+            playVideoAtIndex(currentRotationIndex);
+          }, rotationDuration);
+        }
+        
+        // Initialize rotation
+        startRotation();
+        
+        // Allow manual control to override rotation temporarily
+        document.querySelectorAll('.section-id-{{ section.id }} .play-btn').forEach(function(button, index) {
+          button.addEventListener('click', function() {
+            // Clear any existing interval and timeout
+            if (rotationInterval) {
+              clearInterval(rotationInterval);
+              rotationInterval = null;
+            }
+            if (restartTimeout) {
+              clearTimeout(restartTimeout);
+              restartTimeout = null;
+            }
+            
+            // Restart rotation after 30 seconds of inactivity
+            restartTimeout = setTimeout(() => {
+              if (autoRotationEnabled) {
+                currentRotationIndex = index;
+                startRotation();
+              }
+            }, 30000);
+          });
+        });
+      }
+    }
+    
+    // Helper function to toggle video play/pause
+    function toggleVideoPlayPause(video, videoBlock) {
+      if (video.paused) {
+        // Pause all other videos first
+        document.querySelectorAll('.section-id-{{ section.id }} .video-gallery__block').forEach(function(block) {
+          const otherVideo = block.querySelector('video');
+          if (otherVideo && otherVideo !== video && !otherVideo.paused) {
+            otherVideo.pause();
+            block.classList.remove('video-playing');
+            const otherPlayBtn = block.querySelector('.play-btn');
+            if (otherPlayBtn) {
+              otherPlayBtn.querySelector('.play-icon').style.display = 'inline';
+              otherPlayBtn.querySelector('.pause-icon').style.display = 'none';
+            }
+          }
+        });
+        
+        // Play this video
+        video.play();
+        videoBlock.classList.add('video-playing');
+        const playBtn = videoBlock.querySelector('.play-btn');
+        if (playBtn) {
+          playBtn.querySelector('.play-icon').style.display = 'none';
+          playBtn.querySelector('.pause-icon').style.display = 'inline';
+        }
+      } else {
+        // Pause this video
+        video.pause();
+        videoBlock.classList.remove('video-playing');
+        const playBtn = videoBlock.querySelector('.play-btn');
+        if (playBtn) {
+          playBtn.querySelector('.play-icon').style.display = 'inline';
+          playBtn.querySelector('.pause-icon').style.display = 'none';
+        }
+      }
+    }
+    
+    // Play/Pause functionality for buttons
+    document.querySelectorAll('.section-id-{{ section.id }} .play-btn').forEach(function(button) {
+      button.addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevent triggering video click
+        const blockId = this.getAttribute('data-block-id');
+        const video = document.querySelector(`.${blockId} video`);
+        const videoBlock = this.closest('.video-gallery__block');
+        toggleVideoPlayPause(video, videoBlock);
+      });
+    });
+    
+    // Play/Pause functionality for clicking on video itself
+    document.querySelectorAll('.section-id-{{ section.id }} .video-gallery__block video').forEach(function(video) {
+      video.addEventListener('click', function(e) {
+        const videoBlock = this.closest('.video-gallery__block');
+        toggleVideoPlayPause(video, videoBlock);
+      });
+    });
+
+    // Mute/Unmute functionality
+    document.querySelectorAll('.section-id-{{ section.id }} .mute-btn').forEach(function(button) {
+      button.addEventListener('click', function() {
+        const blockId = this.getAttribute('data-block-id');
+        const video = document.querySelector(`.${blockId} video`);
+        video.muted = !video.muted;
+        if (video.muted) {
+          this.querySelector('.sound-icon').style.display = 'none';
+          this.querySelector('.mute-icon').style.display = 'inline';
+        } else {
+          this.querySelector('.sound-icon').style.display = 'inline';
+          this.querySelector('.mute-icon').style.display = 'none';
+        }
+      });
+    });
+
+    // Product button functionality
+    document.querySelectorAll('.section-id-{{ section.id }} .product-btn').forEach(function(button) {
+      const videoBlock = button.closest('.video-gallery__block');
+      button._isOverlayVisible = false; // Store state on button element
+      
+      if (videoBlock) {
+        // Toggle overlay on click
+        button.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation(); // Prevent other handlers
+          
+          button._isOverlayVisible = !button._isOverlayVisible;
+          
+          const overlay = videoBlock.querySelector('.video-product-overlay');
+          if (overlay) {
+            if (button._isOverlayVisible) {
+              // Show overlay - mark as user controlled and remove closed state
+              overlay.classList.add('video-product-overlay--user-controlled');
+              overlay.classList.remove('video-product-overlay--closed');
+              videoBlock.classList.add('show-product-overlay');
+            } else {
+              // Hide overlay - add closed state and remove user control
+              overlay.classList.add('video-product-overlay--closed');
+              overlay.classList.remove('video-product-overlay--user-controlled');
+              videoBlock.classList.remove('show-product-overlay');
+            }
+          }
+          
+          return false;
+        });
+      }
+    });
+
+    // Product overlay interactions
+    document.querySelectorAll('.section-id-{{ section.id }} .video-product-overlay').forEach(function(overlay) {
+      const buyButton = overlay.querySelector('.video-product-overlay__button');
+      const closeButton = overlay.querySelector('.video-product-overlay__close[data-video-overlay-close="true"]');
+      
+      // Close button functionality
+      if (closeButton) {
+        console.log('Setting up close button for overlay:', overlay); // Debug
+        closeButton.addEventListener('click', function(e) {
+          console.log('Close button clicked!'); // Debug
+          // Only handle if this is specifically our close button
+          if (!e.target.closest('[data-video-overlay-close="true"]')) return;
+          
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation(); // Prevent any other click handlers
+          
+          const videoBlock = overlay.closest('.video-gallery__block');
+          const productBtn = videoBlock ? videoBlock.querySelector('.product-btn') : null;
+          
+          console.log('Found videoBlock:', videoBlock, 'productBtn:', productBtn); // Debug
+          
+          if (videoBlock && productBtn) {
+            // Close overlay and mark as user-closed (stays closed until explicitly opened)
+            videoBlock.classList.remove('show-product-overlay');
+            overlay.classList.add('video-product-overlay--closed');
+            overlay.classList.remove('video-product-overlay--user-controlled');
+            
+            // Reset product button state
+            productBtn._isOverlayVisible = false;
+            productBtn.classList.remove('active');
+            
+            console.log('Overlay closed successfully!'); // Debug
+          }
+          
+          // Return false to ensure no further event processing
+          return false;
+        }, true); // Use capture phase to intercept before other handlers
+      } else {
+        console.log('No close button found for overlay:', overlay); // Debug
+      }
+      
+      if (buyButton) {
+        // Add click tracking
+        buyButton.addEventListener('click', function(e) {
+          // You can add analytics tracking here if needed
+          console.log('Product buy button clicked:', buyButton.href);
+        });
+        
+        // Prevent video controls from interfering with product overlay
+        overlay.addEventListener('click', function(e) {
+          e.stopPropagation();
+        });
+        
+        // Add hover effects for better UX
+        overlay.addEventListener('mouseenter', function() {
+          this.style.transform = this.classList.contains('video-product-overlay--center') 
+            ? 'translate(-50%, -50%) translateY(-5px)' 
+            : 'translateY(-5px)';
+        });
+        
+        overlay.addEventListener('mouseleave', function() {
+          this.style.transform = this.classList.contains('video-product-overlay--center') 
+            ? 'translate(-50%, -50%) translateY(0)' 
+            : 'translateY(0)';
+        });
+      }
+    });
+
+    // Reset closed state when scrolling (but preserve user-controlled state)
+    const videoWrapper = document.querySelector('.section-id-{{ section.id }} .video-gallery__wrapper');
+    if (videoWrapper) {
+      let scrollTimeout;
+      
+      videoWrapper.addEventListener('scroll', function() {
+        if (isProgrammaticRotationScroll) {
+          return;
+        }
+
+        clearTimeout(scrollTimeout);
+        
+        // Reset closed state for overlays after scrolling
+        scrollTimeout = setTimeout(() => {
+          // Reset closed state only for overlays that are NOT user-controlled
+          document.querySelectorAll('.section-id-{{ section.id }} .video-product-overlay.video-product-overlay--closed:not(.video-product-overlay--user-controlled)').forEach(overlay => {
+            overlay.classList.remove('video-product-overlay--closed');
+          });
+          
+          // Auto-play the centered video after scroll stops
+          const wrapper = videoWrapper;
+          const wrapperRect = wrapper.getBoundingClientRect();
+          const wrapperCenter = wrapperRect.left + wrapperRect.width / 2;
+          
+          const videoBlocks = document.querySelectorAll('.section-id-{{ section.id }} .video-gallery__block');
+          let closestBlock = null;
+          let closestDistance = Infinity;
+          
+          // Find the video block closest to the center
+          videoBlocks.forEach((block) => {
+            const blockRect = block.getBoundingClientRect();
+            const blockCenter = blockRect.left + blockRect.width / 2;
+            const distance = Math.abs(blockCenter - wrapperCenter);
+            
+            if (distance < closestDistance) {
+              closestDistance = distance;
+              closestBlock = block;
+            }
+          });
+          
+          // Play the centered video if found
+          if (closestBlock) {
+            const video = closestBlock.querySelector('video');
+            if (video) {
+              // Pause all other videos
+              videoBlocks.forEach((block) => {
+                if (block !== closestBlock) {
+                  const otherVideo = block.querySelector('video');
+                  if (otherVideo && !otherVideo.paused) {
+                    otherVideo.pause();
+                    block.classList.remove('video-playing');
+                    const playBtn = block.querySelector('.play-btn');
+                    if (playBtn) {
+                      playBtn.querySelector('.play-icon').style.display = 'inline';
+                      playBtn.querySelector('.pause-icon').style.display = 'none';
+                    }
+                  }
+                }
+              });
+              
+              // Play the centered video if it's not already playing
+              if (video.paused) {
+                video.currentTime = 0;
+                video.muted = true;
+                video.play();
+                closestBlock.classList.add('video-playing');
+                
+                const playBtn = closestBlock.querySelector('.play-btn');
+                if (playBtn) {
+                  playBtn.querySelector('.play-icon').style.display = 'none';
+                  playBtn.querySelector('.pause-icon').style.display = 'inline';
+                }
+                
+                const muteBtn = closestBlock.querySelector('.mute-btn');
+                if (muteBtn) {
+                  muteBtn.querySelector('.sound-icon').style.display = 'none';
+                  muteBtn.querySelector('.mute-icon').style.display = 'inline';
+                }
+              }
+              
+              // Pause auto-rotation temporarily
+              if (rotationInterval) {
+                clearInterval(rotationInterval);
+                rotationInterval = null;
+              }
+              if (restartTimeout) {
+                clearTimeout(restartTimeout);
+                restartTimeout = null;
+              }
+              
+              // Restart auto-rotation after 30 seconds
+              if (autoRotationEnabled) {
+                restartTimeout = setTimeout(() => {
+                  // Find the index of currently playing video
+                  const currentIndex = Array.from(videoBlocks).indexOf(closestBlock);
+                  if (currentIndex !== -1) {
+                    currentRotationIndex = currentIndex;
+                    startRotation();
+                  }
+                }, 30000);
+              }
+            }
+          }
+        }, 150); // Wait for scroll to stop
+      });
+    }
+
+    // Navigation functionality
+    const containers = document.querySelectorAll('.section-id-{{ section.id }} .video-gallery__container');
+    containers.forEach(function(container) {
+      const wrapper = container.querySelector('.video-gallery__wrapper');
+      const prevBtn = container.querySelector('.video-gallery__nav--prev');
+      const nextBtn = container.querySelector('.video-gallery__nav--next');
+      
+      if (!wrapper || !prevBtn || !nextBtn) return;
+      
+      const videoWidth = {{ section.settings.video_width }};
+      const gap = {{ section.settings.video_gap }};
+      const scrollAmount = videoWidth + gap;
+      
+      // Check if navigation is needed
+      function checkNavigation() {
+        const needsNav = wrapper.scrollWidth > wrapper.clientWidth;
+        if (needsNav) {
+          prevBtn.classList.add('visible');
+          nextBtn.classList.add('visible');
+        } else {
+          prevBtn.classList.remove('visible');
+          nextBtn.classList.remove('visible');
+        }
+      }
+      
+      // Initial check
+      checkNavigation();
+      
+      // Check on resize
+      window.addEventListener('resize', checkNavigation);
+      
+      // Navigation button events
+      prevBtn.addEventListener('click', function() {
+        wrapper.scrollBy({
+          left: -scrollAmount,
+          behavior: 'smooth'
+        });
+      });
+      
+      nextBtn.addEventListener('click', function() {
+        wrapper.scrollBy({
+          left: scrollAmount,
+          behavior: 'smooth'
+        });
+      });
+      
+      // Update button states based on scroll position
+      wrapper.addEventListener('scroll', function() {
+        const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+        prevBtn.style.opacity = wrapper.scrollLeft <= 0 ? '0.5' : '1';
+        nextBtn.style.opacity = wrapper.scrollLeft >= maxScroll ? '0.5' : '1';
+      });
+    });
+  });
+
+  // Lazy loading: Remove the src from lazy videos and load when in view
+  document.addEventListener("DOMContentLoaded", function() {
+    var lazyVideos = document.querySelectorAll("video.lazy-video");
+    if ("IntersectionObserver" in window) {
+      let videoObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            let video = entry.target;
+            let dataSrc = video.getAttribute("data-src");
+            if (dataSrc) {
+              video.setAttribute("src", dataSrc);
+            }
+            video.removeAttribute("data-src");
+            observer.unobserve(video);
+          }
+        });
+      });
+      lazyVideos.forEach(video => {
+        // Remove src and store it in data-src for lazy loading
+        let src = video.getAttribute("src");
+        if (src) {
+          video.setAttribute("data-src", src);
+          video.removeAttribute("src");
+        }
+        videoObserver.observe(video);
+      });
+    } else {
+      // Fallback: load all videos immediately
+      lazyVideos.forEach(video => {
+        let dataSrc = video.getAttribute("data-src");
+        if (dataSrc) {
+          video.setAttribute("src", dataSrc);
+          video.removeAttribute("data-src");
+        }
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "LP Short Gallery",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Outer Spacing"
+    },
+    {
+      "type": "checkbox",
+      "label": "Use custom spacing",
+      "id": "use_custom_padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_block",
+      "label": "Vertical padding",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_block_mobile",
+      "label": "Mobile Vertical padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "select",
+      "id": "style_variant",
+      "label": "Style variant",
+      "default": "default",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "social-proof",
+          "label": "Social proof"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "desktop_columns",
+      "label": "Desktop columns",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "video_width",
+      "label": "Video Width (Desktop)",
+      "min": 200,
+      "max": 600,
+      "step": 20,
+      "unit": "px",
+      "default": 300,
+      "info": "Individual video width on desktop. Videos will automatically create a slider when they overflow the container."
+    },
+    {
+      "type": "range",
+      "id": "mobile_video_width",
+      "label": "Video Width (Mobile)",
+      "min": 150,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 300,
+      "info": "Individual video width on mobile devices (screens 640px and below)"
+    },
+    {
+      "type": "range",
+      "id": "video_gap",
+      "label": "Gap Between Videos (Desktop)",
+      "min": 5,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "mobile_video_gap",
+      "label": "Gap Between Videos (Mobile)",
+      "min": 5,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 15,
+      "info": "Spacing between videos on mobile devices (screens 640px and below)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_navigation",
+      "label": "Show Navigation Arrows",
+      "default": true,
+      "info": "Display left/right arrow buttons when content overflows"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay_videos",
+      "label": "Autoplay All Videos",
+      "default": false,
+      "info": "Videos will start playing automatically when they come into view"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_auto_rotation",
+      "label": "Enable Auto-Rotation",
+      "default": true,
+      "info": "Automatically play videos one at a time in sequence"
+    },
+    {
+      "type": "range",
+      "id": "rotation_duration",
+      "label": "Auto-Rotation Duration",
+      "min": 3,
+      "max": 30,
+      "step": 1,
+      "unit": "sec",
+      "default": 10,
+      "info": "How long each video plays before moving to the next (only applies when Auto-Rotation is enabled)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_mute_button",
+      "label": "Show Mute Button",
+      "default": true,
+      "info": "Display mute/unmute button on all videos (can be overridden per video)"
+    },
+    {
+      "type": "text",
+      "id": "overlay_button_text",
+      "label": "Product Overlay Button Text",
+      "default": "View Product",
+      "info": "Text displayed on the product overlay button"
+    },
+    {
+      "type": "color",
+      "id": "caption_text_color",
+      "label": "Caption text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "caption_eyebrow_color",
+      "label": "Caption eyebrow color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Add videos with custom controls."
+    },
+      {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Tell your story"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "info": "Get {Dream Outcome}  ||  Get +, without - || ...",
+      "default": "Get {Dream Outcome}"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_theme_default_heading_size",
+      "label": "Use theme's default heading size",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "use_custom",
+      "label": "Use Custom",
+      "info": "Leave empty to use the global values (In the theme settings)"
+    },
+    {
+      "type": "range",
+      "id": "heading_max_width",
+      "min": 4,
+      "max": 40,
+      "step": 1,
+      "unit": "em",
+      "label": "Maximum heading width",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 20,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop heading text size",
+      "default": 84
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "min": 20,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile heading text size",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "gap_text",
+      "label": "Section Inner Padding Desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 34,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "gap_text_mobile",
+      "label": "Section Inner Padding Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+          "type": "checkbox",
+          "id": "use_custom_button",
+          "label": "Use Custom Design",
+          "info": "Leave empty to use the default design (In theme settigns)"
+        },
+    {
+          "type": "range",
+          "id": "button_radius",
+          "label": "Border Radius",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "button_max_v",
+          "label": "Button Max Width",
+          "min": 0,
+          "max": 1000,
+          "step": 10,
+          "unit": "px",
+          "default": 500
+        },
+        {
+          "type": "range",
+          "id": "button_padding_v",
+          "label": "Vertical Padding",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "button_padding_h",
+          "label": "Horizontal Padding",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "checkbox",
+          "id": "only_padd",
+          "label": "use only padding for button width"
+        },
+        {
+          "type": "range",
+          "id": "button_font_size",
+          "label": "Font Size",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "default": 16
+        },
+        {
+          "type": "color",
+          "id": "button_background",
+          "label": "Button Background"
+        },
+        {
+          "type": "color",
+          "id": "button_text_color",
+          "label": "Button Text Color"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button",
+          "default": "Button text"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        },
+        {
+          "type": "checkbox",
+          "id": "arrow",
+          "label": "Add Arrow Icon"
+        },
+        {
+          "type": "range",
+          "id": "button_width",
+          "min": 20,
+          "max": 100,
+          "default": 50,
+          "label": "Button Width",
+          "step": 1,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "padding-button",
+          "label": "Section Padding",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 20,
+          "unit": "px"
+        }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        },
+        {
+          "type": "image_picker",
+          "id": "poster_image",
+          "label": "Video Poster Image"
+        },
+        {
+          "type": "text",
+          "id": "overlay_eyebrow",
+          "label": "Overlay eyebrow"
+        },
+        {
+          "type": "text",
+          "id": "overlay_title",
+          "label": "Overlay title"
+        },
+        {
+          "type": "product",
+          "id": "featured_product",
+          "label": "Featured Product",
+          "info": "Select a product to display over this video"
+        },
+        {
+          "type": "select",
+          "id": "product_position",
+          "label": "Product Overlay Position",
+          "options": [
+            {
+              "value": "bottom-left",
+              "label": "Bottom Left"
+            },
+            {
+              "value": "bottom-right",
+              "label": "Bottom Right"
+            },
+            {
+              "value": "top-left",
+              "label": "Top Left"
+            },
+            {
+              "value": "top-right",
+              "label": "Top Right"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            }
+          ],
+          "default": "bottom-left"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_mute_button",
+          "label": "Show Mute Button",
+          "default": false,
+          "info": "Display mute/unmute button for this video"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_product_button",
+          "label": "Show Product Button",
+          "default": true,
+          "info": "Display shopping bag button to show product overlay (only appears if a product is selected)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Video Short"
+    }
+  ]
+}
+{% endschema %}
