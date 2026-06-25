@@ -29,12 +29,15 @@
             "button_url_1": "",
             "button_label_2": "",
             "button_url_2": "",
-            "text_alignment": "center left"
+            "text_alignment": "center center"
           }
         }
       },
       "block_order": [
         "slide_1"
+      ],
+      "custom_css": [
+        "h1.text-overlay__title.has-motion {max-width: 6em;}"
       ],
       "settings": {
         "height": "adapt",
