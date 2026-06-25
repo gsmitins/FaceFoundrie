@@ -307,20 +307,20 @@
         "mobile_padding_y": 56,
         "mobile_padding_x": 28,
         "eyebrow_size": 11,
-        "heading_size": 64,
+        "heading_size": 58,
         "heading_size_mobile": 56,
         "copy_size": 17,
         "feature_size": 17,
         "stat_value_size": 34,
         "stat_label_size": 10,
         "button_size": 11,
-        "eyebrow_gap": 34,
-        "divider_gap_top": 42,
-        "divider_gap_bottom": 34,
-        "feature_gap_top": 42,
-        "stat_gap_top": 42,
-        "button_gap_top": 46,
-        "feature_row_height": 56
+        "eyebrow_gap": 28,
+        "divider_gap_top": 28,
+        "divider_gap_bottom": 28,
+        "feature_gap_top": 26,
+        "stat_gap_top": 28,
+        "button_gap_top": 28,
+        "feature_row_height": 44
       }
     },
     "trusted_reviews": {
@@ -374,7 +374,12 @@
         "review_eGetjJ"
       ],
       "settings": {
+        "subheading": "DON't TAKE OUR WORD FOR IT",
         "heading": "Results you'll see with your own eyes",
+        "copy": "",
+        "cta_label": "See All Success Stories",
+        "cta_link": "",
+        "cta_new_tab": false,
         "bg_color": "#ffffff",
         "text_color": "#1a1a1a",
         "padding_top": 120,
@@ -468,10 +473,12 @@
       ],
       "custom_css": [
         "h2 {text-transform: uppercase; letter-spacing: 2px; text-align: center; margin-inline: auto; font-family: var(--nav-font-family); font-size: 1.7em; opacity: 0.8;}",
-        ".fully-spaced-row--medium {margin-inline: auto; margin: 0 auto;}"
+        ".fully-spaced-row--medium {margin-inline: auto; margin: 0 auto;}",
+        ".logo-list {gap: 0;}",
+        ".logo-list__logo {display: flex; align-items: center;}"
       ],
       "settings": {
-        "title": "As Seen In",
+        "title": "",
         "show_title": true,
         "layout": "grid",
         "full_width": false,
