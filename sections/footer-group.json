@@ -99,7 +99,8 @@
         "1601308656020"
       ],
       "custom_css": [
-        ".section-footer .ff-footer-brandline {font-size: 11.4vw !important;}"
+        "@media (max-width: 2000px) {.section-footer .ff-footer-brandline {font-size: 11.4vw !important;}}",
+        "{width: 100%; max-width: var(--ff-content-max) !important; margin-right: auto; margin-left: auto;}"
       ],
       "settings": {
         "brand_heading": "FACE FOUNDRIÉ",

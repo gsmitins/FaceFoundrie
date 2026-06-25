@@ -163,7 +163,8 @@
         "btn"
       ],
       "custom_css": [
-        ".fully-spaced-row--medium {margin: 0;}"
+        ".fully-spaced-row--medium {margin: 0;}",
+        " {width: 100%; max-width: var(--ff-content-max) !important; margin-right: auto; margin-left: auto;}"
       ],
       "settings": {
         "height": "medium",
@@ -478,7 +479,8 @@
         "h2 {text-transform: uppercase; letter-spacing: 2px; text-align: center; margin-inline: auto; font-family: var(--nav-font-family); font-size: 1.7em; opacity: 0.8;}",
         ".fully-spaced-row--medium {margin-inline: auto; margin: 0 auto;}",
         ".logo-list {gap: 0;}",
-        ".logo-list__logo {display: flex; align-items: center;}"
+        ".logo-list__logo {display: flex; align-items: center;}",
+        "{width: 100%; max-width: var(--ff-content-max) !important; margin-right: auto; margin-left: auto;}"
       ],
       "settings": {
         "title": "",
