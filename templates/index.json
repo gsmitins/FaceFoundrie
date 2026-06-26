@@ -221,12 +221,15 @@
         "tab_toners",
         "tab_oils"
       ],
+      "custom_css": [
+        ".ffs-prod__imgwrap {background-color: #ffffff;}"
+      ],
       "settings": {
         "heading": "Keep The Glow Going.",
         "products_per_tab": 4,
         "shop_all_label": "Shop All →",
         "shop_all_link": "",
-        "bg_color": "#ffffff"
+        "bg_color": "#FFFFFF"
       }
     },
     "membership": {
