@@ -222,7 +222,7 @@
         "tab_oils"
       ],
       "custom_css": [
-        ".ffs-prod__imgwrap {background-color: #ffffff;}"
+        ".ffs-prod__imgwrap {background-color: #ffffff; justify-content: flex-start; padding: 0;}"
       ],
       "settings": {
         "heading": "Keep The Glow Going.",
