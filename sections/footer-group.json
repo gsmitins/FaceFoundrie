@@ -66,8 +66,8 @@
         "1601308717434": {
           "type": "text",
           "settings": {
-            "title": "About Mainstream Boutique",
-            "text": "<p>We're women owned and operated, and proud of it! Our goal is to love, strengthen and celebrate everyone that walks in our door. We are a multi-generational boutique that offers unique, innovative and functional clothing and accessories.</p><ul><li></li></ul>",
+            "title": "About Face Foundrie",
+            "text": "<p>We're women owned and operated, and proud of it! Our goal is to love, strengthen and celebrate everyone that walks in our door. We are a multi-generational franchise that offers unique, innovative and functional facials and face services.</p><ul><li></li></ul>",
             "image_width": 150,
             "show_social_icons": true,
             "soc_icons_large": true,
@@ -99,8 +99,8 @@
         "1601308656020"
       ],
       "custom_css": [
-        "@media (max-width: 2000px) {.section-footer .ff-footer-brandline {font-size: 11.4vw !important;}}",
-        "{width: 100%; max-width: var(--ff-content-max) !important; margin-right: auto; margin-left: auto;}"
+        "@media (max-width: 2000px) {.section-footer .ff-footer-brandline {font-size: 11.4vw !important; }}",
+        " {width: 100%; max-width: var(--ff-content-max) !important; margin-right: auto; margin-left: auto;}"
       ],
       "settings": {
         "brand_heading": "FACE FOUNDRIÉ",
